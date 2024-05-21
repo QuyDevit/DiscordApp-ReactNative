@@ -9,110 +9,117 @@ import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   StatusBar,
-  StyleSheet,
   Text,
   useColorScheme,
   View,
 } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeScreen from './components/screens/HomeScreen';
+import FriendsScreen from './components/screens/FriendsScreen';
+// @ts-ignore
+import DiscordLogo from './assets/discord-logo.svg'
+// @ts-ignore
+import FriendsLogo from './assets/friends.svg'
+// @ts-ignore
+import NotificationIcon from './assets/guildNotificationSettings.svg'
+// @ts-ignore
+import SearchIcon from './assets/search.svg'
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { useAppSelector } from './shared/rdx-hooks';
+import NotificationScreen from './components/screens/NotificationScreen';
+import ProfileScreen from './components/screens/ProfileScreen';
+import { FastImageRes } from './shared/Reusables';
+import SearchScreen from './components/screens/SearchScreen';
+import CustomTabBar from './components/CustomTabbar';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Host } from 'react-native-portalize';
+import AddServer from './components/homedrawer-components/AddServer';
+import JoinServer from './components/homedrawer-components/JoinServer';
+import AddServerStepFinal from './components/homedrawer-components/AddServerStepFinal';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-function Section({children, title}: SectionProps): React.JSX.Element {
+const HomeScreenStack = React.memo((props:any) =>{
+  return(
+    <Stack.Navigator initialRouteName='HomeScreen'>
+        <Stack.Screen name='HomeScreen' component={HomeScreen} options={{headerShown:false}}/>
+        <Stack.Screen name='AddServer' component={AddServer} options={{headerShown:false,}}/>
+        <Stack.Screen name='JoinServer' component={JoinServer} options={{title:''}}/>
+        <Stack.Screen name='AddServerStepFinal' component={AddServerStepFinal} options={{title:''}}/>
+    </Stack.Navigator>
+  )
+})
+
+const App = React.memo((): React.JSX.Element  =>{
   const isDarkMode = useColorScheme() === 'dark';
+  const safeAreaBg = useAppSelector(state => state.main.safeAreabg);
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
+    <>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+        backgroundColor={safeAreaBg}
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+        // backgroundColor={backgroundStyle.backgroundColor}
+      />
+      {/* <SafeAreaView style={{backgroundColor:'red'}}></SafeAreaView> */}
+      <Host>
+           <Tab.Navigator
+            tabBar={(props)=> <CustomTabBar {...props}/>}
+            screenOptions={{
+            tabBarShowLabel: true,
+          }}
+      >
+        <Tab.Screen 
+          name="Home" 
+          component={HomeScreenStack} 
+          options={{
+            tabBarIcon: (props) => <DiscordLogo width={25} height={25} />,
+            headerShown: false ,
+            tabBarLabel:'Máy chủ'
+          }} 
+        />
+        <Tab.Screen 
+          name="Friends" 
+          component={FriendsScreen} 
+          options={{
+            tabBarIcon: (props) => <FriendsLogo width={25} height={25} />,
+            tabBarLabel:'Bạn bè'
+          }} 
+        />
+         <Tab.Screen 
+          name="SearchScreen" 
+          component={SearchScreen} 
+          options={{
+            tabBarIcon: (props) => <SearchIcon width={25} height={25} />,
+            tabBarLabel:'Tìm kiếm'
+          }} 
+        />
+        <Tab.Screen 
+          name="NotificationScreen" 
+          component={NotificationScreen} 
+          options={{
+            tabBarIcon: (props) => <NotificationIcon width={25} height={25} />,
+            tabBarLabel:'Thông báo'
+          }} 
+        />
+        <Tab.Screen 
+          name="ProfileScreen" 
+          component={ProfileScreen} 
+          options={{
+            tabBarIcon: (props) => (
+              <View style={{ width: 25, height: 25, borderRadius: 50, overflow:'hidden' }} >
+                  <FastImageRes uri='https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png'></FastImageRes>
+              </View>
+            ),
+             tabBarLabel:'Bạn'
+          }} 
+        />
+      </Tab.Navigator>
+      </Host>
+    </>
+  );
+})
 
 export default App;
