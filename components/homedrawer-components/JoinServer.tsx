@@ -15,7 +15,6 @@ const JoinServer = React.memo((props: any) => {
 
             <TextInput 
                     style={[styles.inputStyle,{backgroundColor:colorMode.appLightGray}]}
-                    multiline={true}
                     placeholderTextColor={colorMode.textGray}
                     placeholder='https://discord.gg/ok123lfs'
                 />
@@ -42,8 +41,7 @@ const JoinServer = React.memo((props: any) => {
 const styles = StyleSheet.create({
     inputStyle:{
         marginTop:10,
-        minHeight:40,
-        maxHeight:120,
+        height:55,
         borderBottomWidth:0,
         borderRadius:14,
         paddingLeft:15,

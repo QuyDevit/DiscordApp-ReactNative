@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { TText } from '../../themed/themeComponents'
 // @ts-ignore
@@ -8,7 +8,7 @@ import SearchIcon from '../../assets/search.svg'
 // @ts-ignore
 import UserIcon from '../../assets/users.svg'
 // @ts-ignore
-import BarsIcon from '../../assets/bars.svg'
+import BackIcon from '../../assets/back.svg'
 import useAppColor from '../../themed/useAppColor'
 import { useIsFocused } from '@react-navigation/native'
 import { useAppDispatch } from '../../shared/rdx-hooks'
@@ -60,7 +60,7 @@ const HomeDefaultHeader = React.memo(({navigation} : {navigation:any}) =>{
         <View style={[styles.titleChanel,{backgroundColor:colorMode.inverseWhiteLightGray,}]}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
                 <View style={{marginLeft:14,marginRight:8}} onTouchEnd={() => navigation.openDrawer()}>
-                    <BarsIcon width={20} height={20}></BarsIcon>
+                    <BackIcon width={25} height={25}></BackIcon>
                 </View>
 
                 <View style={{flexDirection:'row',alignItems:'center',marginLeft:12}}>
@@ -70,10 +70,9 @@ const HomeDefaultHeader = React.memo(({navigation} : {navigation:any}) =>{
             </View>
          
 
-            <View style={{flexDirection:'row',alignItems:'center',paddingRight:15}}>
-                  <SearchIcon width={25} height={25} style={{marginRight:10}}/>
-                  <UserIcon width={25} height={25}/>
-            </View>
+            <TouchableOpacity style={{justifyContent:'center',marginRight:15,backgroundColor:'#ccc',height:32,width:32,borderRadius:50,position:'relative'}}>
+                  <SearchIcon width={22} height={22} style={{alignSelf:'center'}}/>
+            </TouchableOpacity>
         </View>
     )
 })

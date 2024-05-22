@@ -40,7 +40,7 @@ const AddServerStepFinal = React.memo((props:any) => {
                 placeholder='Tên máy chủ của bạn...'
             />
             {serverName &&
-                <TouchableOpacity onPress={()=> setServerName('')} style={{position:'absolute',right:12,width:24,height:24, borderRadius:50,justifyContent:'center',alignItems:'center',backgroundColor:'gray'}}>
+                <TouchableOpacity onPress={()=> setServerName('')} style={styles.iconDeleteValue}>
                 <CancelIcon width={15} height={15} />
             </TouchableOpacity>
             }
@@ -70,6 +70,16 @@ const styles = StyleSheet.create({
         paddingRight:35,
         fontSize:15,
         fontFamily:'ggsans-Regular'
+    },
+    iconDeleteValue:{
+        position:'absolute',
+        right:12,
+        width:24,
+        height:24,
+         borderRadius:50,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'gray'
     }
 })
 

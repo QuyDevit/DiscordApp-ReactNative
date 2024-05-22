@@ -23,7 +23,6 @@ import CommunityIcon from '../../assets/Community.svg'
 import useAppColor from '../../themed/useAppColor'
 
 
-
 const AddServer = React.memo((props:any) => {
     const colorMode = useAppColor();
      const { navigation } = props;

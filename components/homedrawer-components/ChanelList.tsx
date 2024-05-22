@@ -35,12 +35,12 @@ const InviteOthers = React.memo((props:any) =>{
       const sheetRef = React.useRef<any>();
     return(
         <View style={{width:'100%',alignItems:'center',marginBottom:15,borderBottomWidth:.5,borderColor:'gray'}}>
-            <TouchableOpacity  onPress={() => sheetRef.current?.open()} style={{backgroundColor:'gray',width:'85%',height:30,borderRadius:4,alignItems:'center',justifyContent:'center',flexDirection:'row',marginBottom:25}}>
+            <TouchableOpacity  onPress={() => sheetRef.current?.open()} style={styles.buttonadd}>
                 <InvitePersonIcon width={18} height={18}/>
                 <TText style={{color:'white',fontWeight:'600',marginLeft:5,fontSize:15}} fontFamily='medium'>Mời</TText>
             </TouchableOpacity>
             <Portal>
-                <InviteScreen ref={sheetRef}></InviteScreen>
+                <InviteScreen ref={sheetRef} ></InviteScreen>
             </Portal>
         </View>
     )
@@ -63,6 +63,16 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
         alignItems:'center',
         marginBottom:5
+    },
+    buttonadd:{
+        backgroundColor:'gray',
+        width:'85%',
+        height:30,
+        borderRadius:4,
+        alignItems:'center',
+        justifyContent:'center',
+        flexDirection:'row',
+        marginBottom:25
     }
 })
 

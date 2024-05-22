@@ -1,5 +1,6 @@
+import { TextInput } from "react-native-gesture-handler";
 import React, { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import FastImage from 'react-native-fast-image'
 import { TText } from "../themed/themeComponents";
 // @ts-ignore
@@ -12,6 +13,20 @@ import AngleDownIcon from '../assets/guildDropdownMenu.svg'
 import HashTagIcon from '../assets/channelText.svg'
 import BottomSheet, { BottomSheetMethods } from '@devvie/bottom-sheet';
 import useAppColor from "../themed/useAppColor";
+// @ts-ignore
+import MessageIcon from '../assets/iconMessage.svg'
+// @ts-ignore
+import CopyLinkIcon from '../assets/copylink.svg'
+// @ts-ignore
+import ShareIcon from '../assets/shareinvite.svg'
+// @ts-ignore
+import MailIcon from '../assets/iconMail.svg'
+// @ts-ignore
+import MessagerIcon from '../assets/messagerfb.svg'
+// @ts-ignore
+import ZaloIcon from '../assets/zalo.svg'
+// @ts-ignore
+import TiktokIcon from '../assets/tiktok.svg'
 import { FlashList } from "@shopify/flash-list";
 
 export const ServerIcon = React.memo((props:any) =>{
@@ -94,17 +109,53 @@ export const CustomBottomSheet = React.memo(React.forwardRef((props:any, ref:any
         style={{backgroundColor:'transparent'}}
         dragHandleStyle={{backgroundColor:'white',opacity:.9,width:50,top:10}}
         ref={ref}>
-        <View style={{width:'100%',height:'100%',backgroundColor:colorMode.inverseWhiteGray,borderTopLeftRadius:10,borderTopRightRadius:10,paddingHorizontal:10}}>
-            <FlashList
-                data={[{}]}
-                renderItem={() => 
-                    <>
-                          {props.children}
-                    </>              
-                }
-                estimatedItemSize={1}
-            />
+        <View style={{width:'100%',height:'100%',backgroundColor:colorMode.inverseWhiteGray,borderTopLeftRadius:10,borderTopRightRadius:10}}>
+            {props.children}            
         </View>
       </BottomSheet>
     )
 }))
+
+export const ShareApp = React.memo((props:any) =>{
+    const colorMode = useAppColor();
+    return(
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginTop:30,paddingBottom:20,borderBottomWidth:1,borderColor:'#DBDADA',paddingHorizontal:10}}>
+          {[
+            {icon: ShareIcon, title: 'Chia Sẻ Lời Mời'},
+            {icon: CopyLinkIcon, title: 'Sao Chép Link'},
+            {icon: MessageIcon, title: 'Tin Nhắn'},
+            {icon: MailIcon, title: 'Email'},
+            {icon: MessagerIcon, title: 'Messenger'},
+            {icon: ZaloIcon, title: 'Zalo'},
+            {icon: TiktokIcon, title: 'Tiktok'},
+          ].map((item, index) => (
+            <TouchableOpacity key={index} style={styles.iconItem}>
+              <View style={[styles.iconContainer, {backgroundColor: colorMode.appGray}]}>
+                <item.icon width={28} height={28} />
+              </View>
+              <TText style={styles.titleIcon}>{item.title}</TText>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+    )
+})
+const styles = StyleSheet.create({
+    iconItem:{
+      width:70,
+      alignItems:'center'
+    },
+    titleIcon:{
+      fontSize:13,
+      fontWeight:'bold',
+      color:'black',
+      textAlign:'center'
+    },
+    iconContainer:{
+      width:50,
+      height:50,
+      borderRadius:50,
+      justifyContent:'center',
+      alignItems:'center',
+      marginBottom:6
+    }
+})

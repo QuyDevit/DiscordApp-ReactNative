@@ -1,4 +1,4 @@
-import { View, Text,Button } from 'react-native'
+import { View, Text,Button, TextInput } from 'react-native'
 import React from 'react'
 import BottomSheet, { BottomSheetMethods } from '@devvie/bottom-sheet';
 import { TText } from '../../themed/themeComponents';

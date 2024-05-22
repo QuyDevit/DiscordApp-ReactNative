@@ -85,7 +85,8 @@ const App = React.memo((): React.JSX.Element  =>{
           component={FriendsScreen} 
           options={{
             tabBarIcon: (props) => <FriendsLogo width={25} height={25} />,
-            tabBarLabel:'Bạn bè'
+            tabBarLabel:'Bạn bè',
+            headerShown:false
           }} 
         />
          <Tab.Screen 

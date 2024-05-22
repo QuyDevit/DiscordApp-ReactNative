@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, TextInput } from 'react-native';
 import SearchScreen from './screens/SearchScreen';
 import { useAppSelector } from '../shared/rdx-hooks';
 import { TText } from '../themed/themeComponents';
 
 
 const CustomTabBar = React.memo(({ state, descriptors, navigation }:{ state:any, descriptors:any, navigation:any }) => {
-    const searchTabBottomSheetRef = React.useRef<any>()
+    const searchTabBottomSheetRef = React.useRef<any>(null)
     const shouldHideBottomTab = useAppSelector(state =>state.main.hideBottomTab);
 
   return (
