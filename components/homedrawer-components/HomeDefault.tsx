@@ -12,7 +12,7 @@ import BackIcon from '../../assets/back.svg'
 import useAppColor from '../../themed/useAppColor'
 import { useIsFocused } from '@react-navigation/native'
 import { useAppDispatch } from '../../shared/rdx-hooks'
-import { setHideBottomTab } from '../../shared/rdx-slice'
+import { setHideBottomTab, setOpenRightDrawer } from '../../shared/rdx-slice'
 import ChatBox from './ChatBox'
 import WelcomeMessage from './WelcomeMessage'
 import { FlashList } from '@shopify/flash-list'
@@ -51,6 +51,7 @@ const HomeDefault = React.memo((props: any) =>{
 const HomeDefaultHeader = React.memo(({navigation} : {navigation:any}) =>{
     const isFocused = useIsFocused();  
     const colorMode = useAppColor();
+    const dispatch = useAppDispatch()
      useEffect(()=> {
         if(isFocused){
             navigation.openDrawer()
@@ -69,10 +70,15 @@ const HomeDefaultHeader = React.memo(({navigation} : {navigation:any}) =>{
                 </View>
             </View>
          
+            <View style={{flexDirection:'row'}}>
 
-            <TouchableOpacity style={{justifyContent:'center',marginRight:15,backgroundColor:'#ccc',height:32,width:32,borderRadius:50,position:'relative'}}>
+            <TouchableOpacity style={{justifyContent:'center',marginRight:10,backgroundColor:'#ccc',height:32,width:32,borderRadius:50}}>
                   <SearchIcon width={22} height={22} style={{alignSelf:'center'}}/>
             </TouchableOpacity>
+             <TouchableOpacity onPress={()=>dispatch(setOpenRightDrawer(true))} style={{justifyContent:'center',alignItems:'center',marginRight:15,backgroundColor:'#ccc',height:32,width:32,borderRadius:50}}>
+                  <UserIcon  width={22} height={22}/>
+             </TouchableOpacity>
+            </View>
         </View>
     )
 })

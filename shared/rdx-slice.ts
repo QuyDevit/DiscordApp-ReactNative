@@ -8,6 +8,7 @@ import { IMainSlice } from './types'
 const initialState: IMainSlice = {
   safeAreabg: 'white',
   hideBottomTab:false,
+  openRightdrawer:false,
 }
 
 export const mainSlice = createSlice({
@@ -22,10 +23,17 @@ export const mainSlice = createSlice({
     setHideBottomTab: (state, action: PayloadAction<boolean>) => {
       state.hideBottomTab = action.payload
     },
+    setOpenRightDrawer:  (state, action: PayloadAction<boolean>) => {
+      state.openRightdrawer = action.payload
+    },
   },
 })
 
-export const { updateSafeAreaBg,setHideBottomTab } = mainSlice.actions
+export const { 
+  updateSafeAreaBg,
+  setHideBottomTab,
+  setOpenRightDrawer 
+} = mainSlice.actions
 
 
 export default mainSlice.reducer

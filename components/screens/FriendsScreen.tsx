@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { TText } from '../../themed/themeComponents'
 import useAppColor from '../../themed/useAppColor'
 // @ts-ignore
@@ -9,20 +9,39 @@ import SearchIcon from '../../assets/search.svg'
 // @ts-ignore
 import NewMessIcon from '../../assets/newMessage.svg'
 import { FastImageRes } from '../../shared/Reusables'
+import { useAppDispatch } from '../../shared/rdx-hooks'
+import { setHideBottomTab } from '../../shared/rdx-slice'
+import { useFocusEffect } from '@react-navigation/native';
 
 const FriendsScreen = React.memo( (props: any) => {
+    const dispatch = useAppDispatch();
+  const { navigation } = props;
     const array = [1,2,3,4,5,6,7,8,9,10,11,12];
   const colorMode = useAppColor();
-    const [isFocused, setIsFocused] = useState(false);
+    const onPress = (choose:number) => () =>{
+      if(choose === 0){
+        navigation.navigate('AddFriend')
+      }else{
+        navigation.navigate('Newchat')
+      }
+        dispatch(setHideBottomTab(true))
+    }
+
+  useFocusEffect(
+    useCallback(() => {
+    dispatch(setHideBottomTab(false))
+    }, [])
+  );
 
   return (
-    <View style={{backgroundColor:colorMode.inverseWhite,position:'relative'}}>
-      <TouchableOpacity style={styles.newmessage}>
+    <View style={{backgroundColor:colorMode.inverseWhite,position:'relative',flex:1}}>
+      <TouchableOpacity onPress={onPress(1)} style={styles.newmessage}>
         <NewMessIcon width={30} height={30}/>
       </TouchableOpacity>
+      <View>
       <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginTop:15,paddingHorizontal:15}}>
         <TText style={{fontWeight:'bold',fontSize:20}}>Các tin nhắn</TText>
-        <TouchableOpacity style={{paddingHorizontal:15,paddingVertical:8,backgroundColor:colorMode.appGray,borderRadius:20,flexDirection:"row",alignItems:'center'}}>
+        <TouchableOpacity onPress={onPress(0)} style={{paddingHorizontal:15,paddingVertical:8,backgroundColor:colorMode.appGray,borderRadius:20,flexDirection:"row",alignItems:'center'}}>
             <FriendIcon width={16} height={16}/>
             <TText style={{fontWeight:'bold',marginLeft:5}}>Thêm bạn bè</TText>
         </TouchableOpacity>
@@ -31,14 +50,13 @@ const FriendsScreen = React.memo( (props: any) => {
             <TextInput 
                 style={[styles.inputStyle,{backgroundColor:colorMode.appLightGray}]}
                 placeholderTextColor={colorMode.textGray}
-                 onFocus={() => setIsFocused(true)}
-                onBlur={() =>setIsFocused(false)}
                 placeholder='Tìm kiếm bạn bè...'
             />
             <View style={{position:'absolute',left:20,top:10}}>
                 <SearchIcon width={25} height={25}/>
             </View>
       </View>
+  
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginVertical:15}}>
       <TouchableOpacity style={[styles.friendItem,{backgroundColor:colorMode.appGray}]}>
              <View style={styles.imageview} >
@@ -72,7 +90,8 @@ const FriendsScreen = React.memo( (props: any) => {
               <View style={[styles.statusIndicator,{backgroundColor: '#6A6A6A'}]} />
       </TouchableOpacity>
       </ScrollView>
-      <ScrollView style={{height:550,paddingHorizontal:10}}>
+      </View>
+      <ScrollView style={{paddingHorizontal:10}}>
         {
           array.map((item,index) =>(
             <View key={Math.floor(Math.random() *999999).toString()}>
@@ -144,8 +163,8 @@ const styles = StyleSheet.create({
       borderWidth:2,
       borderColor:'white',
       borderRadius: 50,
-      bottom: 17,
-      right: 24,
+      bottom: 15,
+      right: 22,
     },
   })
 

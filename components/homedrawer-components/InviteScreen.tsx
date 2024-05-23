@@ -13,7 +13,9 @@ const InviteScreen = React.memo(React.forwardRef((props:any, ref:any) => {
 
   return (
     <CustomBottomSheet height={'96%'} ref={ref} >
-      <View style={{paddingTop:10}}>
+      <View style={{paddingTop:10,flex:1}}>
+        <View>
+
         <TText style={{textAlign:'center',fontSize:20,fontWeight:'bold',color:colorMode.inverseBlack}}>Mời bạn bè</TText>  
         {!isFocused &&
           
@@ -36,9 +38,10 @@ const InviteScreen = React.memo(React.forwardRef((props:any, ref:any) => {
             </View>
 
         </View>
-         <ScrollView style={{paddingHorizontal:10,marginTop:5,height:460}}>
+         </View>
+         <ScrollView style={{paddingHorizontal:10,marginTop:5}}>
   
-         <TouchableOpacity style={{paddingVertical:10,backgroundColor:colorMode.appGray,flexDirection:'row',alignItems:'center',justifyContent:'space-between',borderBottomWidth:1,borderColor:'#DBDADA'}}>
+         <TouchableOpacity style={{paddingVertical:10,backgroundColor:colorMode.appGray,flexDirection:'row',alignItems:'center',justifyContent:'space-between',borderBottomWidth:1,borderColor:'#DBDADA',borderTopLeftRadius:15,borderTopRightRadius:15}}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
               <View style={{width:32,height:32,borderRadius: 50,overflow:'hidden',marginLeft:10}}>
                 <FastImageRes uri='https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/03/anh-meme-hai-1.jpg' />
@@ -85,7 +88,7 @@ const InviteScreen = React.memo(React.forwardRef((props:any, ref:any) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{paddingVertical:10,backgroundColor:colorMode.appGray,borderBottomLeftRadius:10,borderBottomRightRadius:10,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+          <TouchableOpacity style={{paddingVertical:10,backgroundColor:colorMode.appGray,borderBottomLeftRadius:15,borderBottomRightRadius:15,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
               <View style={{width:32,height:32,borderRadius: 50,overflow:'hidden',marginLeft:10}}>
                 <FastImageRes uri='https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/03/anh-meme-hai-1.jpg' />
@@ -97,8 +100,11 @@ const InviteScreen = React.memo(React.forwardRef((props:any, ref:any) => {
             </View>
              
           </TouchableOpacity>
+     
+          
   
         </ScrollView>
+
    
       </View>
 

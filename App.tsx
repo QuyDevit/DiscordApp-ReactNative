@@ -37,6 +37,9 @@ import { Host } from 'react-native-portalize';
 import AddServer from './components/homedrawer-components/AddServer';
 import JoinServer from './components/homedrawer-components/JoinServer';
 import AddServerStepFinal from './components/homedrawer-components/AddServerStepFinal';
+import NewchatScreen from './components/screens/NewchatScreen';
+import RoomChatScreen from './components/screens/RoomChatScreen';
+import AddFriendScreen from './components/screens/AddFriendScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -51,6 +54,17 @@ const HomeScreenStack = React.memo((props:any) =>{
     </Stack.Navigator>
   )
 })
+const FriendScreenStack = React.memo((props:any) =>{
+  return(
+    <Stack.Navigator initialRouteName='FriendsScreen'>
+        <Stack.Screen name='Friends' component={FriendsScreen} options={{headerShown:false}}/>
+        <Stack.Screen name='Newchat' component={NewchatScreen} options={{title:'Tin nhắn mới',}}/>
+        <Stack.Screen name='RoomChat' component={RoomChatScreen} options={{title:''}}/>
+        <Stack.Screen name='AddFriend' component={AddFriendScreen} options={{title:'Thêm bạn bè',headerTitleAlign:'center'}}/>
+    </Stack.Navigator>
+  )
+})
+
 
 const App = React.memo((): React.JSX.Element  =>{
   const isDarkMode = useColorScheme() === 'dark';
@@ -81,8 +95,8 @@ const App = React.memo((): React.JSX.Element  =>{
           }} 
         />
         <Tab.Screen 
-          name="Friends" 
-          component={FriendsScreen} 
+          name="FriendsStack" 
+          component={FriendScreenStack} 
           options={{
             tabBarIcon: (props) => <FriendsLogo width={25} height={25} />,
             tabBarLabel:'Bạn bè',
@@ -109,6 +123,7 @@ const App = React.memo((): React.JSX.Element  =>{
           name="ProfileScreen" 
           component={ProfileScreen} 
           options={{
+            headerShown:false,
             tabBarIcon: (props) => (
               <View style={{ width: 25, height: 25, borderRadius: 50, overflow:'hidden' }} >
                   <FastImageRes uri='https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png'></FastImageRes>

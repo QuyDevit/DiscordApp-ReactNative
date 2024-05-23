@@ -3,6 +3,7 @@ import { View, TouchableOpacity, TextInput } from 'react-native';
 import SearchScreen from './screens/SearchScreen';
 import { useAppSelector } from '../shared/rdx-hooks';
 import { TText } from '../themed/themeComponents';
+import { Portal } from 'react-native-portalize';
 
 
 const CustomTabBar = React.memo(({ state, descriptors, navigation }:{ state:any, descriptors:any, navigation:any }) => {
@@ -59,7 +60,10 @@ const CustomTabBar = React.memo(({ state, descriptors, navigation }:{ state:any,
                 {options.tabBarIcon()}
                 <TText style={{fontSize:11,fontWeight:'bold'}}>{options.tabBarLabel}</TText>
             </TouchableOpacity>
-            <SearchScreen ref={searchTabBottomSheetRef}/>
+            <Portal>
+              <SearchScreen ref={searchTabBottomSheetRef}/>
+            </Portal>
+
             </React.Fragment>
         );
       })}

@@ -3,8 +3,8 @@ import React, { useEffect } from 'react'
 import { Drawer } from 'react-native-drawer-layout';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeDefault from '../homedrawer-components/HomeDefault';
-import { useAppDispatch } from '../../shared/rdx-hooks';
-import { setHideBottomTab, updateSafeAreaBg } from '../../shared/rdx-slice';
+import { useAppDispatch, useAppSelector } from '../../shared/rdx-hooks';
+import { setHideBottomTab, setOpenRightDrawer, updateSafeAreaBg } from '../../shared/rdx-slice';
 import useAppColor from '../../themed/useAppColor';
 import LeftDrawerContent from '../homedrawer-components/LeftDrawerContent';
 // @ts-ignore
@@ -18,6 +18,7 @@ import BarsIcon from '../../assets/bars.svg'
 
 import { TText } from '../../themed/themeComponents';
 import { useFocusEffect } from '@react-navigation/native';
+import RightDrawerContent from '../homedrawer-components/RightDrawerContent';
 
 const LeftDrawer = createDrawerNavigator();
 
@@ -63,16 +64,24 @@ const LeftDrawerScreen = React.memo(({navigation} :{navigation:any}) => {
 });
 
 function RightDrawerScreen({navigation} :{navigation:any}) {
-  const [rightDrawerOpen, setRightDrawerOpen] = React.useState(false);
+  const openRightDrawer = useAppSelector(state => state.main.openRightdrawer);
+  const dispatch = useAppDispatch();
 
   return (
     <Drawer
-      open={rightDrawerOpen}
-      onOpen={() => setRightDrawerOpen(true)}
-      onClose={() => setRightDrawerOpen(false)}
+      open={openRightDrawer}
+      drawerStyle={{
+        width:'85%'
+      }}
+      onOpen={() => {
+        dispatch(setOpenRightDrawer(true))
+      }}
+      onClose={() => {
+         dispatch(setOpenRightDrawer(false))
+      }}
       drawerType='slide'
       drawerPosition="right"
-      renderDrawerContent={() => <>{/* Right drawer content */}</>}
+      renderDrawerContent={() => <RightDrawerContent/>}
     >
       <LeftDrawerScreen  navigation={navigation} />
     </Drawer>
