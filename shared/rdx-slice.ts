@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { IMainSlice } from './types'
+import { IMainSlice, TAppColorMode } from './types'
 
 // Define a type for the slice state
 
@@ -9,6 +9,7 @@ const initialState: IMainSlice = {
   safeAreabg: 'white',
   hideBottomTab:false,
   openRightdrawer:false,
+  appColorMode: 'light'
 }
 
 export const mainSlice = createSlice({
@@ -26,13 +27,17 @@ export const mainSlice = createSlice({
     setOpenRightDrawer:  (state, action: PayloadAction<boolean>) => {
       state.openRightdrawer = action.payload
     },
+    setAppColorMode:  (state, action: PayloadAction<TAppColorMode>) => {
+      state.appColorMode = action.payload
+    },
   },
 })
 
 export const { 
   updateSafeAreaBg,
   setHideBottomTab,
-  setOpenRightDrawer 
+  setOpenRightDrawer,
+  setAppColorMode
 } = mainSlice.actions
 
 

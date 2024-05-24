@@ -2,88 +2,31 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import { TText } from '../../themed/themeComponents'
 import useAppColor from '../../themed/useAppColor'
-import { FastImageRes } from '../../shared/Reusables'
-// @ts-ignore
-import HashWithBg from '../../assets/badgeOriginallyKnownAs.svg'
-// @ts-ignore
-import NitroIcon from '../../assets/userLimitedToNitro.svg'
-// @ts-ignore
-import AngleRightIcon from '../../assets/angle-right.svg';
-// @ts-ignore
-import IconUser from '../../assets/iconUser.svg';
-// @ts-ignore
-import PenIcon from '../../assets/guildEditServerProfile.svg';
-// @ts-ignore
-import ChatGiftIcon from '../../assets/chatGiftNitro.svg';
-// @ts-ignore
-import AppearanceIcon from '../../assets/appearance.svg';
-// @ts-ignore
-import InforIcon from '../../assets/guildInfo.svg';
-// @ts-ignore
-import SecurityIcon from '../../assets/security.svg';
-import { FlashList } from "@shopify/flash-list";
 
+import { FlashList } from "@shopify/flash-list";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Overview from '../profile-comp/Overview';
+import Display from '../profile-comp/Display';
+
+const Stack = createNativeStackNavigator();
 
 const ProfileScreen = React.memo((props:any) => {
   const colorMode = useAppColor();
   return (
-    <ScrollView style={{flex:1,backgroundColor:colorMode.inverseWhiteGray}}>
-        <View style={{height:230,width:'100%',backgroundColor:colorMode.balanced_blue}}/>
-          <View style={{flexDirection:'row',paddingHorizontal:20,alignItems:'flex-end',justifyContent:'space-between',paddingTop:60,marginBottom:20}}>
-              <View style={{alignItems:'center',position:'relative'}}>
-                <View style={{padding:10,backgroundColor:colorMode.inverseWhiteGray,width:120,height:120,borderRadius:70,position:'absolute',top:-120,left:0}}>
-                  <View style={{width:100,height:100,borderRadius:50,overflow:'hidden'}}>
-                      <FastImageRes uri='https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png' />
-                  </View>
-                </View>
-                <View style={{paddingLeft:10}}>
-                    <TText style={{fontSize:30,color:colorMode.inverseBlack,fontWeight:'bold'}}>Hoàng</TText>
-                    <TText>hoang_abc</TText>
-                </View>
-              </View>
-              <TouchableOpacity style={{height:40,width:55,borderRadius:20,backgroundColor:colorMode.appGray,justifyContent:'center',alignItems:'center'}}>
-                  <HashWithBg width={30} height={30}/>
-              </TouchableOpacity>
-    
-        </View>
-
-       <View style={{backgroundColor: colorMode.appLightGray, height: 70, justifyContent: 'flex-end', paddingVertical: 10, paddingHorizontal: 10}}>
-            <TText style={{color: colorMode.inverseBlack,fontWeight:'bold',fontSize:16}}>Cài đặt tài khoản</TText>
-         </View>
-        <ListComp title='Lấy Nitro' icon={<NitroIcon  width={35} height={35} />} />
-        <ListComp title='Tài khoản' icon={<IconUser  width={30} height={30} style={{opacity:.8}}/>} />
-                <ListComp title='Thông tin' icon={<PenIcon  width={30} height={30} style={{opacity:.8}}/>} />
-        <ListComp title='Bảo vệ tài khoản' icon={<SecurityIcon  width={30} height={30}/>} />
-           <View style={{backgroundColor: colorMode.appLightGray, height: 70, justifyContent: 'flex-end', paddingVertical: 10, paddingHorizontal: 10}}>
-            <TText style={{color: colorMode.inverseBlack,fontWeight:'bold',fontSize:16}}>Cài đặt ứng dụng</TText>
-         </View>
-        <ListComp title='Hiển thị' icon={<AppearanceIcon  width={30} height={30} style={{opacity:.8}}/>} />
-         <View style={{backgroundColor: colorMode.appLightGray, height: 70, justifyContent: 'flex-end', paddingVertical: 10, paddingHorizontal: 10}}>
-            <TText style={{color: colorMode.inverseBlack,fontWeight:'bold',fontSize:16}}>Cài đặt thanh toán</TText>
-         </View>
-        <ListComp title='Tặng Nitro' icon={<ChatGiftIcon  width={30} height={30} style={{opacity:.9}}/>} />
-        <ListComp title='Hỗ trợ' icon={<InforIcon  width={30} height={30} style={{opacity:.8}}/>} />
-
-
-    </ScrollView>
+    <Stack.Navigator screenOptions={{
+            headerStyle: {
+                backgroundColor: colorMode.inverseWhiteLightGray
+            },
+            headerTitleStyle: {
+                color: colorMode.inverseBlack
+            }
+        }}>
+            <Stack.Screen name="Overview" options={{headerShown: false}} component={Overview} />
+            <Stack.Screen name="Display" component={Display} />
+        </Stack.Navigator>
   )
 })
 
-const ListComp = React.memo(({title,icon}:{title :string,icon:any}) =>{
-    const colorMode = useAppColor();
-  return (
-     <TouchableOpacity style={{flexDirection:'row',alignItems:'center',marginHorizontal:10,paddingVertical:10,paddingHorizontal:10,borderRadius:15,borderBottomWidth:1,borderColor:'lightgray'}}>
-          <View>
-              {icon}
-          </View>
-          <View style={{flexDirection:'row',marginLeft:20,justifyContent:'space-between',flex:1,alignItems:'center'}}>
-              <TText style={{fontSize:18,color:colorMode.inverseBlack,fontWeight:'600'}}>
-                {title}
-              </TText>
-              <AngleRightIcon  width={30} height={30}/>
-          </View>
-     </TouchableOpacity>
-  )
-})
+
 
 export default ProfileScreen

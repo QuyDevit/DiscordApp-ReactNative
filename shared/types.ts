@@ -4,6 +4,7 @@ export interface IMainSlice {
   safeAreabg: string;
   hideBottomTab:boolean;
   openRightdrawer: boolean;
+  appColorMode:TAppColorMode
 }
 
 export interface ITText extends TextProps{
@@ -12,3 +13,5 @@ export interface ITText extends TextProps{
 }
 
 export type TFontFamily = 'bold' | 'semiBold' | 'medium' | 'regular'
+
+export type TAppColorMode = 'light' | 'dark'

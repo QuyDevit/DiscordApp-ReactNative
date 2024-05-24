@@ -11,7 +11,7 @@ import PlusIconServer from '../assets/guildAddServer.svg'
 import AngleDownIcon from '../assets/guildDropdownMenu.svg'
 // @ts-ignore
 import HashTagIcon from '../assets/channelText.svg'
-import BottomSheet, { BottomSheetMethods } from '@devvie/bottom-sheet';
+import BottomSheet from '@devvie/bottom-sheet';
 import useAppColor from "../themed/useAppColor";
 // @ts-ignore
 import MessageIcon from '../assets/iconMessage.svg'

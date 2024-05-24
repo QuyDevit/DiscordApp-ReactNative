@@ -27,15 +27,15 @@ const ListMember = React.memo((props:any) => {
                 </TouchableOpacity>
                  <TouchableOpacity style={{alignItems:'center'}}>
                     <PinIcon width={22} height={22} style={{opacity:.9}}/>
-                    <TText style={{fontWeight:'600'}}>Tìm kiếm</TText>
+                    <TText style={{fontWeight:'600'}}>Ghim</TText>
                 </TouchableOpacity>
                 <TouchableOpacity style={{alignItems:'center'}}>
                     <NotificationIcon width={22} height={22} style={{opacity:.9}} />
-                    <TText style={{fontWeight:'600'}}>Tìm kiếm</TText>
+                    <TText style={{fontWeight:'600'}}>Thông báo</TText>
                 </TouchableOpacity>
                  <TouchableOpacity style={{alignItems:'center'}}>
                     <SettingIcon width={22} height={22} style={{opacity:.9}}/>
-                    <TText style={{fontWeight:'600'}}>Tìm kiếm</TText>
+                    <TText style={{fontWeight:'600'}}>Cài đặt</TText>
                 </TouchableOpacity>
             </View>
             <TText style={{textAlign:'center',fontSize:16,fontWeight:'bold',color:colorMode.inverseBlack,marginTop:15}}>Thành Viên nhóm</TText>

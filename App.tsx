@@ -65,7 +65,6 @@ const FriendScreenStack = React.memo((props:any) =>{
   )
 })
 
-
 const App = React.memo((): React.JSX.Element  =>{
   const isDarkMode = useColorScheme() === 'dark';
   const safeAreaBg = useAppSelector(state => state.main.safeAreabg);
@@ -116,7 +115,9 @@ const App = React.memo((): React.JSX.Element  =>{
           component={NotificationScreen} 
           options={{
             tabBarIcon: (props) => <NotificationIcon width={25} height={25} />,
-            tabBarLabel:'Thông báo'
+            tabBarLabel:'Thông báo',
+            headerTitleAlign:'center',
+            title:'Các thông báo'
           }} 
         />
         <Tab.Screen 

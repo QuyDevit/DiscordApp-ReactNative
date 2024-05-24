@@ -1,4 +1,4 @@
-import { View, Text,Button, ScrollView, TouchableOpacity, StyleSheet, TextInput} from 'react-native'
+import { View, Text,Button, ScrollView, TouchableOpacity, StyleSheet, TextInput, Keyboard} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { TText } from '../../themed/themeComponents';
 import { CustomBottomSheet, FastImageRes, ShareApp } from '../../shared/Reusables';
@@ -10,9 +10,26 @@ import SearchIcon from '../../assets/search.svg'
 const InviteScreen = React.memo(React.forwardRef((props:any, ref:any) => {
   const colorMode = useAppColor();
   const [isFocused, setIsFocused] = useState(false);
+  useEffect(() => {
+    const showSub = Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
+    const hideSub = Keyboard.addListener("keyboardDidHide", _keyboardDidHide);
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
+
+  const _keyboardDidShow = () => {
+    setIsFocused(true);
+  };
+
+  const _keyboardDidHide = () => {
+    setIsFocused(false);  
+  };
 
   return (
-    <CustomBottomSheet height={'96%'} ref={ref} >
+    <CustomBottomSheet height={'96%'} ref={ref}  snapPoints={['50%', '96%']} >
       <View style={{paddingTop:10,flex:1}}>
         <View>
 
