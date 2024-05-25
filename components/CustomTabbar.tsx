@@ -4,14 +4,16 @@ import SearchScreen from './screens/SearchScreen';
 import { useAppSelector } from '../shared/rdx-hooks';
 import { TText } from '../themed/themeComponents';
 import { Portal } from 'react-native-portalize';
+import useAppColor from '../themed/useAppColor';
 
 
 const CustomTabBar = React.memo(({ state, descriptors, navigation }:{ state:any, descriptors:any, navigation:any }) => {
+    const colorMode = useAppColor();
     const searchTabBottomSheetRef = React.useRef<any>(null)
     const shouldHideBottomTab = useAppSelector(state =>state.main.hideBottomTab);
 
   return (
-    <View style={{ flexDirection: 'row',height: shouldHideBottomTab ?0 :55 }}>
+    <View style={{ flexDirection: 'row',height: shouldHideBottomTab ?0 :55 ,backgroundColor:colorMode.inverseWhiteGray}}>
       {state.routes.map((route:any, index:number) => {
         const { options } = descriptors[route.key];
         const label =
@@ -58,7 +60,7 @@ const CustomTabBar = React.memo(({ state, descriptors, navigation }:{ state:any,
                 style={{ flex: 1,height:60,alignItems:'center' ,justifyContent:'center',opacity:isFocused?1: .5}}
             >
                 {options.tabBarIcon()}
-                <TText style={{fontSize:11,fontWeight:'bold'}}>{options.tabBarLabel}</TText>
+                <TText style={{fontSize:11,fontWeight:'bold',color:colorMode.inverseBlack}}>{options.tabBarLabel}</TText>
             </TouchableOpacity>
             <Portal>
               <SearchScreen ref={searchTabBottomSheetRef}/>

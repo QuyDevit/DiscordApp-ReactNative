@@ -133,7 +133,7 @@ export const ShareApp = React.memo((props:any) =>{
               <View style={[styles.iconContainer, {backgroundColor: colorMode.appGray}]}>
                 <item.icon width={28} height={28} />
               </View>
-              <TText style={styles.titleIcon}>{item.title}</TText>
+              <TText style={[styles.titleIcon,{color:colorMode.inverseBlack}]}>{item.title}</TText>
             </TouchableOpacity>
           ))}
         </ScrollView>

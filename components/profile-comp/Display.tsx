@@ -19,7 +19,7 @@ const Display = React.memo((props:any) => {
     return (
         <View style={{flex: 1, backgroundColor: colorMode.inverseWhiteLightGray}}>
             <View style={{height: 50, justifyContent: 'flex-end', paddingVertical: 10, paddingHorizontal: 15, borderBottomColor: 'gray', borderBottomWidth: .5}}>
-                <TText>Chế độ</TText>
+                <TText style={{fontWeight:'600',fontSize:16,color:colorMode.inverseBlack}}>Chế độ</TText>
             </View>
             <View style={{flexDirection: 'row', paddingVertical: 20, width: '100%', justifyContent: 'flex-end'}}>
                 <View onTouchEnd={() => handleSetColorMode('dark')} style={[{width: 70, height: 70, marginRight: 15, borderRadius: 50, backgroundColor: 'gray', borderColor: 'gray', borderWidth: .5},

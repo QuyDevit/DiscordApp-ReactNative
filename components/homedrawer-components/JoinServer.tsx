@@ -6,7 +6,7 @@ import useAppColor from '../../themed/useAppColor'
 const JoinServer = React.memo((props: any) => {
     const colorMode = useAppColor();
   return (
-    <View style={{paddingHorizontal:10,flex:1,justifyContent:'space-between',backgroundColor:colorMode.inverseWhite}}>
+    <View style={{paddingHorizontal:10,flex:1,justifyContent:'space-between',backgroundColor:colorMode.inverseWhiteGray}}>
         <View>
             <TText style={{textAlign:'center',fontSize:24,fontWeight:'bold',marginTop:15,color:colorMode.inverseBlack}}>Tham gia 1 máy chủ có sẵn</TText>
             <TText style={{textAlign:'center',fontWeight:'bold'}}>Nhập lời mời bên dưới để tham gia 1 máy chủ có sẵn</TText>

@@ -14,7 +14,7 @@ const AddServerStepFinal = React.memo((props:any) => {
     const hasErrorServerName = () => serverName.length< 1;
   const colorMode = useAppColor()
   return (
-    <View style={{paddingHorizontal:10,flex:1,backgroundColor:colorMode.inverseWhite}}>
+    <View style={{paddingHorizontal:10,flex:1,backgroundColor:colorMode.inverseWhiteGray}}>
       <TText fontFamily='bold' style={{textAlign:'center',fontSize:24,fontWeight:'bold',color:colorMode.inverseBlack,marginTop:15}}>Tạo Máy chủ Của Bạn</TText>
       <TText style={{textAlign:'center',fontWeight:'bold',marginTop:10}}>Máy chủ của bạn là nơi bạn giao lưu với bạn bè của mình.</TText>
       <TText style={{textAlign:'center',fontWeight:'bold'}}>Hãy tạo máy chủ của riêng bạn và bắt đầu trò chuyện.</TText>

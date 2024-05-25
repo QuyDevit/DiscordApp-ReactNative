@@ -7,7 +7,7 @@ import useAppColor from '../../themed/useAppColor'
 const Request = React.memo((props:any) => {
     const colorMode = useAppColor();
   return (
-    <View style={{backgroundColor:'white',flex:1}}>
+    <View style={{backgroundColor:colorMode.inverseWhiteGray,flex:1}}>
       <View style={{marginTop:20}}>
       <TouchableOpacity style={{paddingHorizontal:20,flexDirection:'row',alignItems:'center',marginBottom:15}}>
         <View style={styles.imageview}>

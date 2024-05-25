@@ -16,7 +16,7 @@ const NewchatScreen = React.memo((props:any) => {
     const colorMode = useAppColor();
     const [isFocused, setIsFocused] = useState(false);
   return (
-    <View style={{flex:1,backgroundColor:colorMode.inverseWhite}}>
+    <View style={{flex:1,backgroundColor:colorMode.inverseWhiteGray}}>
        <View style={{position:'relative',justifyContent:'center',marginTop:20,paddingHorizontal:15}} >
             <TextInput
                 style={[styles.inputStyle,{backgroundColor:colorMode.appLightGray}]}

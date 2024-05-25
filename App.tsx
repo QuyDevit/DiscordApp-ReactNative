@@ -40,17 +40,19 @@ import AddServerStepFinal from './components/homedrawer-components/AddServerStep
 import NewchatScreen from './components/screens/NewchatScreen';
 import RoomChatScreen from './components/screens/RoomChatScreen';
 import AddFriendScreen from './components/screens/AddFriendScreen';
+import useAppColor from './themed/useAppColor';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const HomeScreenStack = React.memo((props:any) =>{
+  const colorMode = useAppColor();
   return(
     <Stack.Navigator initialRouteName='HomeScreen'>
         <Stack.Screen name='HomeScreen' component={HomeScreen} options={{headerShown:false}}/>
         <Stack.Screen name='AddServer' component={AddServer} options={{headerShown:false,}}/>
-        <Stack.Screen name='JoinServer' component={JoinServer} options={{title:''}}/>
-        <Stack.Screen name='AddServerStepFinal' component={AddServerStepFinal} options={{title:''}}/>
+        <Stack.Screen name='JoinServer' component={JoinServer} options={{title:'',headerStyle:{backgroundColor:colorMode.appLightGray,},headerTintColor :colorMode.inverseBlack}}/>
+        <Stack.Screen name='AddServerStepFinal' component={AddServerStepFinal} options={{title:'',headerStyle:{backgroundColor:colorMode.appLightGray,},headerTintColor :colorMode.inverseBlack}}/>
     </Stack.Navigator>
   )
 })
@@ -66,6 +68,7 @@ const FriendScreenStack = React.memo((props:any) =>{
 })
 
 const App = React.memo((): React.JSX.Element  =>{
+  const colorMode = useAppColor();
   const isDarkMode = useColorScheme() === 'dark';
   const safeAreaBg = useAppSelector(state => state.main.safeAreabg);
   return (
@@ -117,6 +120,8 @@ const App = React.memo((): React.JSX.Element  =>{
             tabBarIcon: (props) => <NotificationIcon width={25} height={25} />,
             tabBarLabel:'Thông báo',
             headerTitleAlign:'center',
+            headerStyle:{backgroundColor:colorMode.appLightGray,},
+            headerTitleStyle:{color:colorMode.inverseBlack},
             title:'Các thông báo'
           }} 
         />

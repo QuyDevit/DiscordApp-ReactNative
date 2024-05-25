@@ -12,7 +12,7 @@ const SearchScreen = React.memo(React.forwardRef((props:any, ref:any) => {
     <CustomBottomSheet height={'95%'} ref={ref}>
         <View style={{position:'relative',justifyContent:'center',marginTop:20,paddingHorizontal:10}} >
             <TextInput 
-                style={[styles.inputStyle,{backgroundColor:colorMode.appLightGray}]}
+                style={[styles.inputStyle,{backgroundColor:colorMode.inverseWhiteGray}]}
                 placeholderTextColor={colorMode.textGray}
                 placeholder='Tìm kiếm máy chủ...'
             />

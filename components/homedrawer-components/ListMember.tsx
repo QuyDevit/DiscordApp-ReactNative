@@ -18,7 +18,7 @@ import { FastImageRes } from '../../shared/Reusables'
 const ListMember = React.memo((props:any) => {
     const colorMode = useAppColor();
   return (
-    <View style={{flex:1,paddingHorizontal:10,paddingTop:5}}>
+    <View style={{flex:1,paddingHorizontal:10,paddingTop:5,backgroundColor:colorMode.inverseWhiteGray}}>
         <View>
             <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomWidth:1,borderColor:'lightgray',paddingBottom:15}}>
                 <TouchableOpacity style={{alignItems:'center'}}>

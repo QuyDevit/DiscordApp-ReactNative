@@ -16,7 +16,7 @@ const RightDrawerContent = React.memo((props:any) => {
 const RightDrawerHeader = React.memo((props: any) =>{
      const colorMode = useAppColor();
     return(
-        <View style={styles.drawerHeader}>
+        <View style={[styles.drawerHeader,{backgroundColor:colorMode.inverseWhiteGray}]}>
             <TText style={{color:colorMode.inverseBlack,fontSize:18,fontWeight:'bold'}}>Server Coders</TText>
         </View>
     )
@@ -26,13 +26,13 @@ const styles = StyleSheet.create({
     drawerHeader:{
         width:'100%',
         height:53, 
-        borderTopLeftRadius:15,
-        borderTopRightRadius:15,
+        // borderTopLeftRadius:15,
+        // borderTopRightRadius:15,
         paddingHorizontal:10,
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center',
-        marginBottom:5,
+
         borderBottomWidth:1,
         borderColor:'lightgray'
     }

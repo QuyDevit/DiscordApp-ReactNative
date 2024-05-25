@@ -34,7 +34,7 @@ const AddServer = React.memo((props:any) => {
          navigation.navigate('AddServerStepFinal');
     }
   return (
-    <View style={{backgroundColor:colorMode.inverseWhite,flex:1}}>
+    <View style={{backgroundColor:colorMode.inverseWhiteGray,flex:1}}>
         <TouchableOpacity onPress={handleCancelPress} style={{marginLeft:20,marginTop:10}}>
             <CancelIcon width={25} height={25}/>
         </TouchableOpacity>

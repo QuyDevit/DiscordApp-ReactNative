@@ -34,7 +34,7 @@ const FriendsScreen = React.memo( (props: any) => {
   );
 
   return (
-    <View style={{backgroundColor:colorMode.inverseWhite,position:'relative',flex:1}}>
+    <View style={{backgroundColor:colorMode.inverseWhiteGray,position:'relative',flex:1}}>
       <TouchableOpacity onPress={onPress(1)} style={styles.newmessage}>
         <NewMessIcon width={30} height={30}/>
       </TouchableOpacity>

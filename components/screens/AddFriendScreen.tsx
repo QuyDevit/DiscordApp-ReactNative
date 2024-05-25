@@ -9,7 +9,7 @@ const AddFriendScreen = React.memo((props:any) => {
     const hasErrorName = () => name.length < 1;
     const colorMode = useAppColor();
   return (
-    <View style={{flex:1,backgroundColor:colorMode.inverseWhite,justifyContent:'space-between'}}>
+    <View style={{flex:1,backgroundColor:colorMode.inverseWhiteGray,justifyContent:'space-between'}}>
         <View>
              <ShareApp/>
              <TText style={{textAlign:'center',fontWeight:'bold',fontSize:24,marginTop:10,color:colorMode.inverseBlack}}>Thêm bằng tên người dùng</TText>

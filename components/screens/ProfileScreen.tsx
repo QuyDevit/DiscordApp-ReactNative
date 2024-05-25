@@ -22,7 +22,7 @@ const ProfileScreen = React.memo((props:any) => {
             }
         }}>
             <Stack.Screen name="Overview" options={{headerShown: false}} component={Overview} />
-            <Stack.Screen name="Display" component={Display} />
+            <Stack.Screen name="Display" component={Display} options={{title:'Hiển thị'}}/>
         </Stack.Navigator>
   )
 })

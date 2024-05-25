@@ -1,5 +1,5 @@
 
 <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="60" height="60" transform="matrix(-1 0 0 -1 59.9998 60)" fill="white"/>
+<rect width="60" height="60" transform="matrix(-1 0 0 -1 59.9998 60)" fill="transparent"/>
 <path d="M49.7998 26.8161V31.8161L19.7998 31.8161L33.5498 45.5661L29.9998 49.1161L10.1998 29.3161L29.9998 9.51609L33.5498 13.0661L19.7998 26.8161L49.7998 26.8161Z" fill="black"/>
 </svg>

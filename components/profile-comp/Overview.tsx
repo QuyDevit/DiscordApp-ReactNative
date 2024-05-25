@@ -38,7 +38,7 @@ const Overview = React.memo((props:any) => {
         <View style={{height:230,width:'100%',backgroundColor:colorMode.balanced_blue}}/>
           <View style={{flexDirection:'row',paddingHorizontal:20,alignItems:'flex-end',justifyContent:'space-between',paddingTop:60,marginBottom:20}}>
               <View style={{alignItems:'center',position:'relative'}}>
-                <View style={{padding:10,backgroundColor:colorMode.inverseWhiteGray,width:120,height:120,borderRadius:70,position:'absolute',top:-120,left:0}}>
+                <View style={{padding:10,backgroundColor:colorMode.inverseWhiteLightGray,width:120,height:120,borderRadius:70,position:'absolute',top:-120,left:0}}>
                   <View style={{width:100,height:100,borderRadius:50,overflow:'hidden'}}>
                       <FastImageRes uri='https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png' />
                   </View>
