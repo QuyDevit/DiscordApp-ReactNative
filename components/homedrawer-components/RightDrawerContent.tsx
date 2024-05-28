@@ -3,21 +3,23 @@ import React from 'react'
 import { TText } from '../../themed/themeComponents'
 import useAppColor from '../../themed/useAppColor'
 import ListMember from './ListMember'
+import { useAppSelector } from '../../shared/rdx-hooks'
 
 const RightDrawerContent = React.memo((props:any) => {
+  const server = useAppSelector(state =>state.server.serverData);
   return (
     <View style={{flex:1}}>
-      <RightDrawerHeader/>
+      <RightDrawerHeader title={server.title}/>
       <ListMember/>
     </View>
   )
 })
 
-const RightDrawerHeader = React.memo((props: any) =>{
+const RightDrawerHeader = React.memo((props: {title:string}) =>{
      const colorMode = useAppColor();
     return(
         <View style={[styles.drawerHeader,{backgroundColor:colorMode.inverseWhiteGray}]}>
-            <TText style={{color:colorMode.inverseBlack,fontSize:18,fontWeight:'bold'}}>Server Coders</TText>
+            <TText style={{color:colorMode.inverseBlack,fontSize:18,fontWeight:'bold'}}>{props.title}</TText>
         </View>
     )
 })

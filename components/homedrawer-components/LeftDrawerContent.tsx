@@ -4,15 +4,13 @@ import { TText } from '../../themed/themeComponents'
 import ServerList from './ServerList'
 import ChanelList from './ChanelList'
 import useAppColor from '../../themed/useAppColor'
-import {useNavigation} from '@react-navigation/native'
 
 const LeftDrawerContent = React.memo((props: any) =>{
-    const navigation = useNavigation();
         const colorMode = useAppColor();
     return(
         <View {...props.dProps} style={{flex:1,flexDirection:'row',backgroundColor:colorMode.appLightGray}}>
-           <ServerList navigation={navigation}/>
-           <ChanelList/>
+           <ServerList navigation={props.dProps.navigation}/>
+           <ChanelList navigation={props.dProps.navigation}/>
         </View>
     )
 })

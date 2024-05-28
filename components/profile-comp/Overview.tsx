@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useCallback } from 'react'
-import { FastImageRes } from '../../shared/Reusables'
+import React, { useCallback, useEffect } from 'react'
+import { FastImageRes, userLogout } from '../../shared/Reusables'
 import { TText } from '../../themed/themeComponents'
 import useAppColor from '../../themed/useAppColor'
 // @ts-ignore
@@ -21,18 +21,29 @@ import AppearanceIcon from '../../assets/appearance.svg';
 import InforIcon from '../../assets/guildInfo.svg';
 // @ts-ignore
 import SecurityIcon from '../../assets/security.svg';
-import { useAppDispatch } from '../../shared/rdx-hooks'
+import { useAppDispatch, useAppSelector } from '../../shared/rdx-hooks'
 import { setHideBottomTab } from '../../shared/rdx-slice'
 import { useFocusEffect } from '@react-navigation/native'
 
 const Overview = React.memo((props:any) => {
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(state => state.user.currentUser);
+    const defaultUri:string = 'https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png';
+    const userUri:string = user?.avatart || defaultUri;
       const colorMode = useAppColor();
         useFocusEffect(
     useCallback(() => {
     dispatch(setHideBottomTab(false))
     }, [])
   );
+  useEffect(() =>{
+    if(!user){
+      props.navigation.navigate('LoginScreen')
+    }
+  },[user])
+
+  const logout = userLogout();
+    
   return (
    <ScrollView style={{flex:1,backgroundColor:colorMode.inverseWhiteGray}}>
         <View style={{height:230,width:'100%',backgroundColor:colorMode.balanced_blue}}/>
@@ -40,12 +51,12 @@ const Overview = React.memo((props:any) => {
               <View style={{alignItems:'center',position:'relative'}}>
                 <View style={{padding:10,backgroundColor:colorMode.inverseWhiteLightGray,width:120,height:120,borderRadius:70,position:'absolute',top:-120,left:0}}>
                   <View style={{width:100,height:100,borderRadius:50,overflow:'hidden'}}>
-                      <FastImageRes uri='https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png' />
+                      <FastImageRes uri={userUri} />
                   </View>
                 </View>
                 <View style={{paddingLeft:10}}>
-                    <TText style={{fontSize:30,color:colorMode.inverseBlack,fontWeight:'bold'}}>Hoàng</TText>
-                    <TText>hoang_abc</TText>
+                    <TText style={{fontSize:30,color:colorMode.inverseBlack,fontWeight:'bold'}}>{user?.name}</TText>
+                    <TText>{user?.hashtagname}</TText>
                 </View>
               </View>
               <TouchableOpacity style={{height:40,width:55,borderRadius:20,backgroundColor:colorMode.appGray,justifyContent:'center',alignItems:'center'}}>
@@ -71,7 +82,7 @@ const Overview = React.memo((props:any) => {
         <ListComp title='Tặng Nitro' icon={<ChatGiftIcon  width={30} height={30} style={{opacity:.9}}/>} />
         <ListComp title='Hỗ trợ' icon={<InforIcon  width={30} height={30} style={{opacity:.8}}/>} />
 
-         <TouchableOpacity style={{alignItems:'center',paddingVertical:15}}>
+         <TouchableOpacity onPress={logout} style={{alignItems:'center',paddingVertical:15}}>
             <TText style={{fontSize:18,color:'red',fontWeight:'600'}}>Đăng Xuất</TText>
          </TouchableOpacity>
 

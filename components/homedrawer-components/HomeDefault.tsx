@@ -9,9 +9,11 @@ import SearchIcon from '../../assets/search.svg'
 import UserIcon from '../../assets/users.svg'
 // @ts-ignore
 import BackIcon from '../../assets/back.svg'
+// @ts-ignore
+import SpeakerIcon from '../../assets/speaker.svg';
 import useAppColor from '../../themed/useAppColor'
 import { useIsFocused } from '@react-navigation/native'
-import { useAppDispatch } from '../../shared/rdx-hooks'
+import { useAppDispatch, useAppSelector } from '../../shared/rdx-hooks'
 import { setHideBottomTab, setOpenRightDrawer } from '../../shared/rdx-slice'
 import ChatBox from './ChatBox'
 import WelcomeMessage from './WelcomeMessage'
@@ -51,6 +53,7 @@ const HomeDefault = React.memo((props: any) =>{
 const HomeDefaultHeader = React.memo(({navigation} : {navigation:any}) =>{
     const isFocused = useIsFocused();  
     const colorMode = useAppColor();
+    const chanel = useAppSelector(state => state.server.channelData);
     const dispatch = useAppDispatch()
      useEffect(()=> {
         if(isFocused){
@@ -65,8 +68,12 @@ const HomeDefaultHeader = React.memo(({navigation} : {navigation:any}) =>{
                 </View>
 
                 <View style={{flexDirection:'row',alignItems:'center',marginLeft:12}}>
-                    <HashTagIcon width={25} height={25}/>
-                    <TText fontFamily='bold' style={{fontWeight:'bold', marginLeft:5,color:colorMode.inverseBlack,fontSize:16}} numberOfLines={1}>chào-mừng-bạn</TText>
+                    {
+                        chanel.type === 'text' ?
+                         <HashTagIcon width={25} height={25}/>:
+                         <SpeakerIcon width={25} height={25}/>
+                    }
+                    <TText fontFamily='bold' style={{fontWeight:'bold', marginLeft:5,color:colorMode.inverseBlack,fontSize:16}} numberOfLines={1}>{chanel.title}</TText>
                 </View>
             </View>
          

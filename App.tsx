@@ -71,6 +71,9 @@ const App = React.memo((): React.JSX.Element  =>{
   const colorMode = useAppColor();
   const isDarkMode = useColorScheme() === 'dark';
   const safeAreaBg = useAppSelector(state => state.main.safeAreabg);
+  const user = useAppSelector(state => state.user.currentUser);
+    const defaultUri:string = 'https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png';
+    const userUri:string = user?.avatart || defaultUri;
   return (
     <>
       <StatusBar
@@ -132,7 +135,7 @@ const App = React.memo((): React.JSX.Element  =>{
             headerShown:false,
             tabBarIcon: (props) => (
               <View style={{ width: 25, height: 25, borderRadius: 50, overflow:'hidden' }} >
-                  <FastImageRes uri='https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png'></FastImageRes>
+                  <FastImageRes uri={userUri} ></FastImageRes>
               </View>
             ),
              tabBarLabel:'Bạn'

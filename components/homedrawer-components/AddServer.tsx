@@ -30,20 +30,20 @@ const AddServer = React.memo((props:any) => {
     const handleCancelPress = () => {
         navigation.goBack();
     };
-    const handleStepFinal =() =>{
-         navigation.navigate('AddServerStepFinal');
-    }
+    const handleStepFinal = (choose: number) => {
+        navigation.navigate('AddServerStepFinal',{ choose } );
+    };
   return (
     <View style={{backgroundColor:colorMode.inverseWhiteGray,flex:1}}>
         <TouchableOpacity onPress={handleCancelPress} style={{marginLeft:20,marginTop:10}}>
             <CancelIcon width={25} height={25}/>
         </TouchableOpacity>
         <ScrollView >
-            <TText fontFamily='bold' style={{textAlign:'center',fontSize:22,fontWeight:'bold',color:'black',marginTop:20}}>Tạo máy chủ của bạn</TText>
+        <TText fontFamily='bold' style={{textAlign:'center',fontSize:22,fontWeight:'bold',color:'black',marginTop:20}}>Tạo máy chủ của bạn</TText>
         <TText fontFamily='bold' style={{textAlign:'center',marginTop:5,fontWeight:'700'}}>Máy chủ của bạn là nơi bạn giao lưu với bạn bè của mình.</TText>
         <TText fontFamily='bold' style={{textAlign:'center',fontWeight:'700',marginBottom:20}}>Hãy tạo máy chủ của riêng bạn và bắt đầu trò chuyện.</TText>
 
-        <TouchableOpacity onPress={handleStepFinal} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderRadius:15,}]}>
+        <TouchableOpacity onPress={() => handleStepFinal(1)} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderRadius:15,}]}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
                 <ServerModelPrivateIcon width={45} height={45}/>
                 <TText style={{fontWeight:'700',marginLeft:15,fontSize:16}}>Tạo mẫu riêng</TText>
@@ -54,7 +54,7 @@ const AddServer = React.memo((props:any) => {
         </TouchableOpacity>
 
         <TText fontFamily='bold' style={{fontWeight:'700',marginLeft:10,marginTop:20}}>Bắt đầu từ mẫu</TText>
-        <TouchableOpacity onPress={handleStepFinal} style={[styles.item_container,{backgroundColor:colorMode.appGray,marginTop:10,borderTopLeftRadius:15,borderTopRightRadius:15,borderBottomWidth:1,borderColor:'#DBDADA'}]}>
+        <TouchableOpacity onPress={() => handleStepFinal(2)} style={[styles.item_container,{backgroundColor:colorMode.appGray,marginTop:10,borderTopLeftRadius:15,borderTopRightRadius:15,borderBottomWidth:1,borderColor:'#DBDADA'}]}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
                 <GamingIcon width={45} height={45}/>
                 <TText style={{fontWeight:'700',marginLeft:15,fontSize:16}}>Gaming</TText>
@@ -63,7 +63,7 @@ const AddServer = React.memo((props:any) => {
                 <ShowmenuIcon width={35} height={35}/>
             </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleStepFinal} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderColor:'#DBDADA',borderBottomWidth:1}]}>
+        <TouchableOpacity onPress={() => handleStepFinal(3)} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderColor:'#DBDADA',borderBottomWidth:1}]}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
                 <ShoolIcon width={45} height={45}/>
                 <TText style={{fontWeight:'700',marginLeft:15,fontSize:16}}>Câu lạc bộ trường học</TText>
@@ -72,7 +72,7 @@ const AddServer = React.memo((props:any) => {
                 <ShowmenuIcon width={35} height={35}/>
             </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleStepFinal} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderColor:'#DBDADA',borderBottomWidth:1}]}>
+        <TouchableOpacity onPress={() => handleStepFinal(4)} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderColor:'#DBDADA',borderBottomWidth:1}]}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
                 <GroupIcon width={45} height={45}/>
                 <TText style={{fontWeight:'700',marginLeft:15,fontSize:16}}>Nhóm học tập</TText>
@@ -81,7 +81,7 @@ const AddServer = React.memo((props:any) => {
                 <ShowmenuIcon width={35} height={35}/>
             </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleStepFinal} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderColor:'#DBDADA',borderBottomWidth:1}]}>
+        <TouchableOpacity onPress={() => handleStepFinal(5)} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderColor:'#DBDADA',borderBottomWidth:1}]}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
                 <FriendIcon width={45} height={45}/>
                 <TText style={{fontWeight:'700',marginLeft:15,fontSize:16}}>Bạn bè</TText>
@@ -90,7 +90,7 @@ const AddServer = React.memo((props:any) => {
                 <ShowmenuIcon width={35} height={35}/>
             </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleStepFinal} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderColor:'#DBDADA',borderBottomWidth:1}]}>
+        <TouchableOpacity onPress={() => handleStepFinal(6)} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderColor:'#DBDADA',borderBottomWidth:1}]}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
                 <CreatorIcon width={45} height={45}/>
                 <TText style={{fontWeight:'700',marginLeft:15,fontSize:16}}>Nghệ sĩ và người sáng tạo</TText>
@@ -99,7 +99,7 @@ const AddServer = React.memo((props:any) => {
                 <ShowmenuIcon width={35} height={35}/>
             </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleStepFinal} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderBottomLeftRadius:15,borderBottomRightRadius:15}]}>
+        <TouchableOpacity onPress={() => handleStepFinal(7)} style={[styles.item_container,{backgroundColor:colorMode.appGray,borderBottomLeftRadius:15,borderBottomRightRadius:15}]}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
                 <CommunityIcon width={45} height={45}/>
                 <TText style={{fontWeight:'700',marginLeft:15,fontSize:16}}>Cộng đồng địa phương</TText>

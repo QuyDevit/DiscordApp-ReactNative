@@ -3,11 +3,57 @@ import React, { useState } from 'react'
 import { ShareApp } from '../../shared/Reusables'
 import useAppColor from '../../themed/useAppColor'
 import { TText } from '../../themed/themeComponents'
+import firestore from '@react-native-firebase/firestore'
+import { useAppSelector } from '../../shared/rdx-hooks'
+import { TNotification } from '../../shared/types'
+import { showMessage } from "react-native-flash-message";
 
 const AddFriendScreen = React.memo((props:any) => {
+   const user = useAppSelector(state => state.user.currentUser);
     const [name,setName] = useState('');
     const hasErrorName = () => name.length < 1;
     const colorMode = useAppColor();
+    const addFriends = async () =>{
+      try {
+        const notificationRef = firestore().collection('NOTIFICATIONS');
+        const userRef = firestore().collection('USERS');
+        const recipientHashtagName = name; 
+
+        const userSnapshot = await userRef.where('hashtagname', '==', recipientHashtagName).get();
+       if (userSnapshot.empty) {
+
+      showMessage({
+        message: "Không tìm thấy người dùng này!",
+        type: "danger",
+        duration: 2000,
+        autoHide: true,
+        style: { justifyContent: 'center', alignItems: 'center' }
+      });
+    } else {
+      const notificationData: TNotification = {
+        id: '',
+        from: user!, 
+        checkread: false, 
+        to: recipientHashtagName, 
+        notificationAt: Date.now(), 
+      };
+
+      const docRef = await notificationRef.add(notificationData);
+      const notificationId = docRef.id;
+      await docRef.update({ id: notificationId });
+      setName('');
+      showMessage({
+        message: "Gửi kết bạn thành công!",
+        type: "success",
+        duration: 3000,
+        autoHide: true,
+        style: { justifyContent: 'center', alignItems: 'center' }
+      });
+    }
+      } catch (error) {
+        console.error('Lỗi khi gửi yêu cầu kết bạn: ', error);
+      }
+    }
   return (
     <View style={{flex:1,backgroundColor:colorMode.inverseWhiteGray,justifyContent:'space-between'}}>
         <View>
@@ -32,7 +78,7 @@ const AddFriendScreen = React.memo((props:any) => {
                     </View>            
              </View>
         </View>
-        <TouchableOpacity disabled={hasErrorName()} style={{paddingVertical:15,backgroundColor:"#5E71EC",borderRadius:15,alignItems:'center',justifyContent:'center',marginBottom:20,marginHorizontal:15,opacity: !hasErrorName() ? 1: .6 }}>
+        <TouchableOpacity disabled={hasErrorName()} onPress={addFriends} style={{paddingVertical:15,backgroundColor:"#5E71EC",borderRadius:15,alignItems:'center',justifyContent:'center',marginBottom:20,marginHorizontal:15,opacity: !hasErrorName() ? 1: .6 }}>
             <TText style={{color:'white',fontWeight:'bold'}}>Gửi yêu cầu kết bạn</TText>
         </TouchableOpacity>
     </View>

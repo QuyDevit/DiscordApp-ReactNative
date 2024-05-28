@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import { TText } from '../../themed/themeComponents'
 import useAppColor from '../../themed/useAppColor'
@@ -9,23 +9,34 @@ import InvitePersonIcon from '../../assets/guildInvitePeople.svg'
 import { ChanelListSection } from '../../shared/Reusables'
 import InviteScreen from './InviteScreen'
 import { Portal } from 'react-native-portalize'
+import { useAppSelector } from '../../shared/rdx-hooks'
+import { ChanelListContent } from '../../shared/constants'
 
-const ChanelList = React.memo((props: any) =>{
+const ChanelList = React.memo((props:any) =>{
     const colorMode = useAppColor();
+    const server = useAppSelector(state =>state.server.serverData);
     return(
-        <View style={[styles.mainList,{backgroundColor:colorMode.inverseWhiteLightGray}]}>
-           <ServerListHeader/>
-           <InviteOthers/>
-           <ChanelListSection/>
-        </View>
+        <ChanelListContent.Provider value={{navigation:props.navigation}}>
+
+            <View style={[styles.mainList,{backgroundColor:colorMode.inverseWhiteLightGray}]}>
+            {Object.keys(server).length > 0 ? (
+                    <>
+                        <ServerListHeader />
+                        <InviteOthers />
+                    </>
+                ) : null}
+            <ChanelListSection/>
+            </View>
+        </ChanelListContent.Provider>
     )
 })
 
 const ServerListHeader = React.memo((props: any) =>{
+    const server = useAppSelector(state =>state.server.serverData);
      const colorMode = useAppColor();
     return(
         <TouchableOpacity style={styles.listHeader}>
-            <TText style={{color:colorMode.inverseBlack,fontSize:18,fontWeight:'bold'}}>Server Coders</TText>
+            <TText style={{color:colorMode.inverseBlack,fontSize:18,fontWeight:'bold'}}>{server.title}</TText>
             <Dots width={30} height={30}/>
         </TouchableOpacity>
     )

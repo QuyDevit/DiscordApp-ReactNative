@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "37649063976",
+    "project_id": "discord-react-native",
+    "storage_bucket": "discord-react-native.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37649063976:android:ba640a662c708c6995d51d",
+        "android_client_info": {
+          "package_name": "com.discordapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "37649063976-4a1ip12oa6gneniqlusl5ao17l14evlb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.discordapp",
+            "certificate_hash": "39f2ef7909ec390279ccf27e39590c1e5b3a5f26"
+          }
+        },
+        {
+          "client_id": "37649063976-e25on5npc7m118t9mnv2jruo3g9onnr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSax_IYZxEypJZO9kKHYSgXkgrbYTaQPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "37649063976-e25on5npc7m118t9mnv2jruo3g9onnr2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TText } from '../../themed/themeComponents'
 import useAppColor from '../../themed/useAppColor'
 // @ts-ignore
@@ -13,10 +13,29 @@ import SettingIcon from '../../assets/guildServerSettings.svg'
 // @ts-ignore
 import HostIcon from '../../assets/host.svg'
 import { FastImageRes } from '../../shared/Reusables'
+import { useAppSelector } from '../../shared/rdx-hooks'
+import { TUser } from '../../shared/types'
+import firestore from '@react-native-firebase/firestore'
 
 
 const ListMember = React.memo((props:any) => {
     const colorMode = useAppColor();
+    const user = useAppSelector(state =>state.user.currentUser);
+    const server = useAppSelector(state =>state.server.serverData);
+    const [members, setMembers] = useState<Array<TUser>>([]);
+    useEffect(() => {
+        const fetchMembers = async () => {
+            try {
+                const membersRef = firestore().collection('USERS');
+                const snapshot = await membersRef.where('id', 'in', server.listmember.map(member => member.id)).get();
+                const membersData = snapshot.docs.map(doc => doc.data()) as Array<TUser>;
+                setMembers(membersData);
+            } catch (error) {
+                console.error('Error fetching members: ', error);
+            }
+        };
+        fetchMembers();
+    }, [server]);
   return (
     <View style={{flex:1,paddingHorizontal:10,paddingTop:5,backgroundColor:colorMode.inverseWhiteGray}}>
         <View>
@@ -41,33 +60,29 @@ const ListMember = React.memo((props:any) => {
             <TText style={{textAlign:'center',fontSize:16,fontWeight:'bold',color:colorMode.inverseBlack,marginTop:15}}>Thành Viên nhóm</TText>
         </View>
         <ScrollView>
-            <TText style={{fontWeight:'bold',marginVertical:10}}>Trực tuyến - 1</TText>
-            <TouchableOpacity style={{flexDirection:'row',paddingVertical:15,paddingHorizontal:10,borderRadius:10,backgroundColor:colorMode.appGray}}>
-                <View style={styles.imageview} >
-                    <FastImageRes uri='https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png'></FastImageRes>
-                </View>
-                <View style={{alignItems:'center',marginLeft:10,flexDirection:'row'}}>
-                    <TText style={{fontWeight:'bold',marginRight:2}}>Hoàng</TText>
-                    <HostIcon width={20} height={20} />
-                </View>
-            </TouchableOpacity>
-           <TText style={{fontWeight:'bold',marginTop:20,marginBottom:10}}>Ngoại tuyến - 2</TText>
-            <TouchableOpacity style={{flexDirection:'row',padding:10,backgroundColor:colorMode.appGray,borderTopLeftRadius:10,borderTopRightRadius:10}}>
-                <View style={styles.imageview} >
-                    <FastImageRes uri='https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png'></FastImageRes>
-                </View>
-                <View style={{alignItems:'center',marginLeft:10,flexDirection:'row'}}>
-                    <TText style={{fontWeight:'bold',marginRight:2}}>Hiếu</TText>
-                </View>
-            </TouchableOpacity>
-             <TouchableOpacity style={{flexDirection:'row',padding:10,backgroundColor:colorMode.appGray,borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
-                <View style={styles.imageview} >
-                    <FastImageRes uri='https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png'></FastImageRes>
-                </View>
-                <View style={{alignItems:'center',marginLeft:10,flexDirection:'row'}}>
-                    <TText style={{fontWeight:'bold',marginRight:2}}>Bình</TText>
-                </View>
-            </TouchableOpacity>
+            <TText style={{ fontWeight: 'bold', marginVertical: 10 }}>Trực tuyến</TText>
+            {members.filter(item => item.status === 1).map(item => (
+                <TouchableOpacity key={item.id} style={{ flexDirection: 'row', paddingVertical: 15, paddingHorizontal: 10, borderRadius: 10, backgroundColor: colorMode.appGray }}>
+                    <View style={styles.imageview}>
+                        <FastImageRes uri={item.avatart}></FastImageRes>
+                    </View>
+                    <View style={{ alignItems: 'center', marginLeft: 10, flexDirection: 'row' }}>
+                        <TText style={{ fontWeight: 'bold', marginRight: 2 }}>{item.name}</TText>
+                        {item.id === server.createby && <HostIcon width={20} height={20} />}
+                    </View>
+                </TouchableOpacity>
+            ))}
+            <TText style={{ fontWeight: 'bold', marginTop: 20, marginBottom: 10 }}>Ngoại tuyến</TText>
+            {members.filter(item => item.status === 0).map(item => (
+                <TouchableOpacity key={item.id} style={{ flexDirection: 'row', padding: 10, backgroundColor: colorMode.appGray, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
+                    <View style={styles.imageview}>
+                        <FastImageRes uri={item.avatart}></FastImageRes>
+                    </View>
+                    <View style={{ alignItems: 'center', marginLeft: 10, flexDirection: 'row' }}>
+                        <TText style={{ fontWeight: 'bold', marginRight: 2 }}>{item.name}</TText>
+                    </View>
+                </TouchableOpacity>
+            ))}
         </ScrollView>
  
     </View>

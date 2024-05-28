@@ -1,11 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import mainSlice from './rdx-slice'
+import userSlice from './userSlice'
+import serverSlice from './serverSlice'
 // ...
 
 export const store = configureStore({
   reducer: {
     main: mainSlice,
-
+    user: userSlice,
+    server:serverSlice
   },
 })
 
