@@ -25,6 +25,7 @@ const ListMember = React.memo((props:any) => {
     const [members, setMembers] = useState<Array<TUser>>([]);
     useEffect(() => {
         const fetchMembers = async () => {
+        if (server?.listmember) {
             try {
                 const membersRef = firestore().collection('USERS');
                 const snapshot = await membersRef.where('id', 'in', server.listmember.map(member => member.id)).get();
@@ -34,7 +35,9 @@ const ListMember = React.memo((props:any) => {
                 console.error('Error fetching members: ', error);
             }
         };
+        }
         fetchMembers();
+
     }, [server]);
   return (
     <View style={{flex:1,paddingHorizontal:10,paddingTop:5,backgroundColor:colorMode.inverseWhiteGray}}>
