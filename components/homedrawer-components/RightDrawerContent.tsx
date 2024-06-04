@@ -9,7 +9,7 @@ const RightDrawerContent = React.memo((props:any) => {
   const server = useAppSelector(state =>state.server.serverData);
   return (
     <View style={{flex:1}}>
-      <RightDrawerHeader title={server.title}/>
+      <RightDrawerHeader title={server?.title}/>
       <ListMember/>
     </View>
   )

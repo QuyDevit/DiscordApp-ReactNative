@@ -1,4 +1,4 @@
 import React from "react";
-import { IChanelListContent } from "./types";
+import { IChannelListContent } from "./types";
 
-export const ChanelListContent = React.createContext({} as IChanelListContent)
+export const ChannelListContent = React.createContext({} as IChannelListContent)

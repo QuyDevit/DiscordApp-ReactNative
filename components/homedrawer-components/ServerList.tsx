@@ -4,7 +4,7 @@ import { AddServerIcon, ServerIcon, getdataServer } from "../../shared/Reusables
 import useAppColor from "../../themed/useAppColor";
 import { useAppDispatch, useAppSelector } from "../../shared/rdx-hooks";
 import { setHideBottomTab } from "../../shared/rdx-slice";
-import { fetchUserServers } from "../../shared/serverSlice";
+import { fetchUserServers, setChannelData, setServerData } from "../../shared/serverSlice";
 import { useFocusEffect } from "@react-navigation/native";
 
 const ServerList = React.memo((props:any,state:any)=>{
@@ -12,7 +12,7 @@ const ServerList = React.memo((props:any,state:any)=>{
     const colorMode = useAppColor();
     const user = useAppSelector((state) => state.user); 
     const servers = useAppSelector((state) => state.server); 
-    const [selectedIcon, setSelectedIcon] = useState('');
+    const serverdata = useAppSelector((state) => state.server.serverData); 
     const onPress = () =>{
         props.navigation.navigate('AddServer');
         dispatch(setHideBottomTab(true));
@@ -36,10 +36,11 @@ const ServerList = React.memo((props:any,state:any)=>{
         <View style={{height:'100%',width:'22%',justifyContent:'flex-start'}}>
             { servers.servers?.map(server =>(
                 <View key={server.id}>
-                    <ServerIcon uri={server.image} isSelected={selectedIcon === server.id} 
+                    <ServerIcon uri={server.image} isSelected={serverdata.id === server.id} 
                     onPress={async () => {
-                        setSelectedIcon(server.id);
-                        getdataServer(server.id,dispatch)
+                        getdataServer(server.id,dispatch);
+                        const firstChanel = server.channels?.[0]?.items?.[0];
+                        dispatch(setChannelData(firstChanel))
                         }} />
                 </View>
             )) }

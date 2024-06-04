@@ -7,6 +7,7 @@ import { FlashList } from "@shopify/flash-list";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Overview from '../profile-comp/Overview';
 import Display from '../profile-comp/Display';
+import Account from '../profile-comp/Account';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ const ProfileScreen = React.memo((props:any) => {
         }}>
             <Stack.Screen name="Overview" options={{headerShown: false}} component={Overview} />
             <Stack.Screen name="Display" component={Display} options={{title:'Hiển thị'}}/>
+            <Stack.Screen name="Account" component={Account} options={{title:'Tài khoản'}}/>
         </Stack.Navigator>
   )
 })

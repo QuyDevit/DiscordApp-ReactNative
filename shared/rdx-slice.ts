@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { IMainSlice, TAppColorMode, TChannel, TServerData } from './types'
+import { IMainSlice, TAppColorMode, TChannel, TRoom, TServerData } from './types'
 
 // Define a type for the slice state
 
@@ -10,6 +10,8 @@ const initialState: IMainSlice = {
   hideBottomTab:false,
   openRightdrawer:false,
   appColorMode: 'light',
+  idRoomchat: {} as TRoom,
+  channelSection:''
 }
 
 export const mainSlice = createSlice({
@@ -29,7 +31,13 @@ export const mainSlice = createSlice({
     },
     setAppColorMode:  (state, action: PayloadAction<TAppColorMode>) => {
       state.appColorMode = action.payload
-    }
+    },  
+    setIdRoomChat:  (state, action: PayloadAction<TRoom>) => {
+      state.idRoomchat = action.payload
+    },
+     setChannelSection:  (state, action: PayloadAction<string>) => {
+      state.channelSection = action.payload
+    },
   },
 })
 
@@ -37,7 +45,9 @@ export const {
   updateSafeAreaBg,
   setHideBottomTab,
   setOpenRightDrawer,
-  setAppColorMode
+  setAppColorMode,
+  setIdRoomChat,
+  setChannelSection
 } = mainSlice.actions
 
 

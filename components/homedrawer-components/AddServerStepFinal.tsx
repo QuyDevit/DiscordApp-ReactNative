@@ -18,7 +18,7 @@ import LottieView from 'lottie-react-native';
 import { showMessage, hideMessage } from "react-native-flash-message";
 
 const AddServerStepFinal = React.memo((props:any) => {
-    const [loading, setLoading] = useState(false); // State variable to manage loading animation
+    const [loading, setLoading] = useState(false); 
     const [success, setSuccess] = useState(false); 
     const user = useAppSelector(state =>state.user.currentUser);
     const {choose} = props.route.params;
@@ -87,6 +87,7 @@ const AddServerStepFinal = React.memo((props:any) => {
                 type: "success",
                 duration: 3000, 
                 autoHide: true,
+                style: { justifyContent: 'center', alignItems: 'center' }
             });
             props.navigation.navigate('HomeScreen');
 

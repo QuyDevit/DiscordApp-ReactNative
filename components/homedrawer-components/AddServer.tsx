@@ -39,7 +39,7 @@ const AddServer = React.memo((props:any) => {
             <CancelIcon width={25} height={25}/>
         </TouchableOpacity>
         <ScrollView >
-        <TText fontFamily='bold' style={{textAlign:'center',fontSize:22,fontWeight:'bold',color:'black',marginTop:20}}>Tạo máy chủ của bạn</TText>
+        <TText fontFamily='bold' style={{textAlign:'center',fontSize:22,fontWeight:'bold',color:colorMode.inverseBlack,marginTop:20}}>Tạo máy chủ của bạn</TText>
         <TText fontFamily='bold' style={{textAlign:'center',marginTop:5,fontWeight:'700'}}>Máy chủ của bạn là nơi bạn giao lưu với bạn bè của mình.</TText>
         <TText fontFamily='bold' style={{textAlign:'center',fontWeight:'700',marginBottom:20}}>Hãy tạo máy chủ của riêng bạn và bắt đầu trò chuyện.</TText>
 

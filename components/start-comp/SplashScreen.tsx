@@ -4,10 +4,10 @@ import LottieView from 'lottie-react-native';
 import useAppColor from '../../themed/useAppColor';
 import auth from "@react-native-firebase/auth"
 import firestore from '@react-native-firebase/firestore'
-import { TUser } from '../../shared/types';
+import { TServerData, TUser } from '../../shared/types';
 import { useAppDispatch } from '../../shared/rdx-hooks';
 import { setUser } from '../../shared/userSlice';
-import { fetchUserServers } from '../../shared/serverSlice';
+import { fetchUserServers, setChannelData, setServerData } from '../../shared/serverSlice';
 
 const SplashScreen = React.memo(({ navigation }: { navigation: any }) => {
       const dispatch = useAppDispatch();
@@ -27,16 +27,26 @@ const SplashScreen = React.memo(({ navigation }: { navigation: any }) => {
                   phone: userDoc.data()?.phone,
                   birthday: userDoc.data()?.birthday, 
                   avatart:  userDoc.data()?.avatart,
-                  status: 1
+                  status: 1,
+                  listfriend:userDoc.data()?.listfriend
                 };
                 await userDocRef.set({ status: 1 }, { merge: true });
                 dispatch(setUser(newUser));
-                dispatch(fetchUserServers(newUser.id));
-                navigation.navigate('App'); // Điều chỉnh 'App' để phù hợp với tên tuyến đường bạn cần
+                const resultAction = await dispatch(fetchUserServers(user.uid));
+                 if (fetchUserServers.fulfilled.match(resultAction)) {
+                  const servers: TServerData[] = resultAction.payload;
+                  if(servers.length>0){
+                    dispatch(setServerData(servers?.[0]));
+                    dispatch(setChannelData(servers?.[0].channels?.[0].items?.[0]));
+                  }
+                } else {
+                  console.error("Failed to fetch user servers:", resultAction.payload);
+                }
+                navigation.navigate('App'); 
               } 
             } catch (error) {
               console.error("Lỗi khi truy xuất dữ liệu từ Firestore:", error);
-              // Xử lý lỗi tại đây
+              navigation.navigate('StartScreen');
             }
         }else {
           navigation.navigate('StartScreen');
@@ -47,7 +57,7 @@ const SplashScreen = React.memo(({ navigation }: { navigation: any }) => {
     animationRef.current?.play();
     const timer = setTimeout(() => {
       onAuthStateChanged(auth().currentUser)
-    }, 1000);
+    }, 500);
 
     // Clear timeout nếu component bị unmounted
     return () => clearTimeout(timer);

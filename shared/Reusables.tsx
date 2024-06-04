@@ -1,5 +1,5 @@
 import { TextInput } from "react-native-gesture-handler";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import FastImage from 'react-native-fast-image'
 import auth from "@react-native-firebase/auth"
@@ -36,9 +36,11 @@ import { FlashList } from "@shopify/flash-list";
 import { useAppDispatch, useAppSelector } from "./rdx-hooks";
 import { clearUser, setUser } from "./userSlice";
 import { TChannel, TChannelSection, TChannelType, TServerData, TUser } from "./types";
-import { setChannelData, setServerData } from "./serverSlice";
+import { clearChannelData, clearServerData, clearServers, setChannelData, setServerData } from "./serverSlice";
 import { Dispatch } from "@reduxjs/toolkit";
-import { ChanelListContent } from "./constants";
+import { ChannelListContent } from "./constants";
+import { format } from 'date-fns';
+import { setChannelSection, setHideBottomTab } from "./rdx-slice";
 
 export const ServerIcon = React.memo((props:any) =>{
     const colorMode = useAppColor()
@@ -76,40 +78,48 @@ export const FastImageRes = React.memo(({uri}:{uri:string}) =>{
     )
 })
 
-const ChanelListHeader = React.memo((props: {title: string}) => {
+const ChannelListHeader = React.memo((props: {channelSection:TChannelSection,server:TServerData,navigation:any}) => {
+  const user = useAppSelector(state=>state.user.currentUser);
+  const colorMode = useAppColor();
+  const dispatch = useAppDispatch();
+  const onPress = () =>{
+    props.navigation.navigate("AddChannel")
+    dispatch(setChannelSection(props.channelSection?.id))
+    dispatch(setHideBottomTab(true))
+  }
   return (
         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <AngleDownIcon width={25} height={25} />
-            <TText style={{ fontWeight: 'bold', fontSize: 17 }} fontFamily="bold">{props.title}</TText>
+            <TText style={{ fontWeight: 'bold', fontSize: 17,color:colorMode.inverseBlack }} fontFamily="bold">{props.channelSection?.category}</TText>
           </View>
-          <PlusIcon width={20} height={20} />
+          {props.server.createby === user?.id &&  <TouchableOpacity onPress={onPress}><PlusIcon width={20} height={20} /></TouchableOpacity> }
+         
         </View>
   );
 });
 
-export const ChanelListSection = React.memo((props:any) =>{
+export const ChannelListSection = React.memo((props:any) =>{
     const dispatch = useAppDispatch();
     const channelData = useAppSelector(state => state.server.channelData);
-    const useChanelListContentIn = React.useContext(ChanelListContent);
+    const usechannelListContentIn = React.useContext(ChannelListContent);
     const handleChannelClick = (channel: TChannel) => {
         dispatch(setChannelData(channel));
-        useChanelListContentIn.navigation.closeDrawer();
+        usechannelListContentIn.navigation.closeDrawer();
     };
-    const chanelSection = useAppSelector(state => state.server.serverData);
+    const serverdata = useAppSelector(state => state.server.serverData);
     return(
       <ScrollView showsVerticalScrollIndicator={false}>
-
-        {chanelSection.channels?.map(item =>(
+        {serverdata?.channels?.map(item =>(
         <View key={item.id} style={{width:'100%',paddingHorizontal:8,}}>
-            <ChanelListHeader title={item.category}/>
-            {item.items?.map(chanel =>(
-              <View key={chanel.id}>
-                <ChanelListItem 
-                  title={chanel.title} 
-                  type={chanel.type} 
-                  onClick={() => handleChannelClick(chanel)}
-                  selected={channelData.id === chanel.id}/>
+            <ChannelListHeader channelSection={item} server={serverdata} navigation={usechannelListContentIn.navigation}/>
+            {item.items?.map(channel =>(
+              <View key={channel.id}>
+                <ChannelListItem 
+                  title={channel.title} 
+                  type={channel.type} 
+                  onClick={() => handleChannelClick(channel)}
+                  selected={channelData?.id === channel.id}/>
               </View>
             ))}
         </View>
@@ -118,8 +128,9 @@ export const ChanelListSection = React.memo((props:any) =>{
     )
 })
 
-export const ChanelListItem= React.memo((props:{title:string;type:TChannelType;onClick?:Function;selected:boolean}) =>{
+export const ChannelListItem= React.memo((props:{title:string;type:TChannelType;onClick?:Function;selected:boolean}) =>{
     const [isPressed, setIsPressed] = useState(false);
+      const colorMode = useAppColor();
     return(
         <TouchableOpacity
             style={{width:'100%',paddingHorizontal:10,flexDirection:'row',alignItems:'center',paddingVertical:5,marginBottom:10,borderRadius:5, backgroundColor: props.selected ? 'rgba(0,0,0,0.1)' : 'transparent'}}
@@ -134,7 +145,7 @@ export const ChanelListItem= React.memo((props:{title:string;type:TChannelType;o
             <SpeakerIcon width={22} height={22}/>
           }
 
-            <TText style={{fontSize:15,marginLeft:6}} numberOfLines={1}>{props.title}</TText>
+            <TText style={{fontSize:15,marginLeft:6,color:colorMode.inverseBlack}} numberOfLines={1}>{props.title}</TText>
         </TouchableOpacity>
     )
 })
@@ -206,7 +217,8 @@ export const handleGoogleSignIn = async (): Promise<TUser> => {
                 phone: user.phoneNumber || '',
                 birthday: '', 
                 avatart:user.photoURL || '',
-                status:1
+                status:1,
+                listfriend:[]
             };
 
             await userDocRef.set(newUser);
@@ -214,39 +226,57 @@ export const handleGoogleSignIn = async (): Promise<TUser> => {
             return newUser;
         }
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         throw new Error("Đăng nhập thất bại " + error);
     }
 };
+
+
 const removeDiacritics = (str:string) => {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 };
 // Hàm tạo hashtagname duy nhất
-const generateUniqueHashtagName = (name: string): string => {
+export const generateUniqueHashtagName = (name: string): string => {
     const sanitized = removeDiacritics(name.toLowerCase().replace(/\s/g, '_')); // Chuyển đổi tên thành chuỗi không dấu và không có khoảng trắng
     const randomNumber = Math.floor(100000 + Math.random() * 900000); // Sinh số ngẫu nhiên
 
     return `${sanitized}#${randomNumber}`; // Kết hợp tên và số ngẫu nhiên để tạo hashtagname
 };
 export const userLogout = () => {
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-    const logout = async () => {
-        try {
-            await GoogleSignin.revokeAccess();
-            const userId = auth().currentUser?.uid;
-            if (userId) {
-                const userDocRef = firestore().collection('USERS').doc(userId);
-                await userDocRef.set({ status: 0 }, { merge: true }); // Cập nhật trạng thái thành 0 trên Firestore
-            }
-            await auth().signOut();
-            dispatch(clearUser()); 
-        } catch (error) {
-    console.error("Logout error: ", error);
+  const logout = async () => {
+    try {
+      const currentUser = auth().currentUser;
+      if (currentUser) {
+        const providers = currentUser.providerData.map(provider => provider.providerId);
+
+        if (providers.includes('google.com')) {
+          await GoogleSignin.revokeAccess();
         }
-    };
 
-    return logout;
+        const userId = currentUser.uid;
+        if (userId) {
+          const userDocRef = firestore().collection('USERS').doc(userId);
+          await userDocRef.set({ status: 0 }, { merge: true });
+        }
+
+        await auth().signOut();
+
+        // Dispatch actions to clear user data
+        dispatch(clearUser());
+        dispatch(clearServers());
+        dispatch(clearServerData());
+        dispatch(clearChannelData());
+      } else {
+        console.warn("Không có người dùng nào đang đăng nhập");
+      }
+    } catch (error) {
+      console.error("Logout error: ", error);
+    }
+  };
+
+  return logout;
 };
 
 export const getdataServer = async(idserver:string,dispatch:Dispatch) =>{
@@ -264,6 +294,11 @@ export const getdataServer = async(idserver:string,dispatch:Dispatch) =>{
       console.error('Error fetching server data:', error);
     }
 }
+
+export const formatTimestamp = (timestamp: number) => {
+  return format(new Date(timestamp), 'dd/MM/yyyy HH:mm');
+};
+
 export const formatTimeAgo = (timestamp:number) => {
   const now = Date.now();
   const timeDiff = now - timestamp;

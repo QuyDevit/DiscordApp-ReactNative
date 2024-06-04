@@ -31,18 +31,19 @@ const Overview = React.memo((props:any) => {
     const defaultUri:string = 'https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png';
     const userUri:string = user?.avatart || defaultUri;
       const colorMode = useAppColor();
-        useFocusEffect(
-    useCallback(() => {
-    dispatch(setHideBottomTab(false))
-    }, [])
+    useFocusEffect(
+      useCallback(() => {
+        dispatch(setHideBottomTab(false))
+    }, [dispatch])
   );
   useEffect(() =>{
-    if(!user){
+    if(user === null){
       props.navigation.navigate('LoginScreen')
     }
   },[user])
 
   const logout = userLogout();
+
     
   return (
    <ScrollView style={{flex:1,backgroundColor:colorMode.inverseWhiteGray}}>
@@ -69,8 +70,8 @@ const Overview = React.memo((props:any) => {
             <TText style={{color: colorMode.inverseBlack,fontWeight:'bold',fontSize:16}}>Cài đặt tài khoản</TText>
          </View>
         <ListComp title='Lấy Nitro' icon={<NitroIcon  width={35} height={35} />} />
-        <ListComp title='Tài khoản' icon={<IconUser  width={30} height={30} style={{opacity:.8}}/>} />
-                <ListComp title='Thông tin' icon={<PenIcon  width={30} height={30} style={{opacity:.8}}/>} />
+        <ListComp callbackFn={() =>  {props.navigation.navigate('Account');dispatch(setHideBottomTab(true))}} title='Tài khoản' icon={<IconUser  width={30} height={30} style={{opacity:.8}}/>} />
+        <ListComp title='Thông tin' icon={<PenIcon  width={30} height={30} style={{opacity:.8}}/>} />
         <ListComp title='Bảo vệ tài khoản' icon={<SecurityIcon  width={30} height={30}/>} />
            <View style={{backgroundColor: colorMode.appLightGray, height: 70, justifyContent: 'flex-end', paddingVertical: 10, paddingHorizontal: 10}}>
             <TText style={{color: colorMode.inverseBlack,fontWeight:'bold',fontSize:16}}>Cài đặt ứng dụng</TText>

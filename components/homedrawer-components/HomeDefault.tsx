@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { TText } from '../../themed/themeComponents'
 // @ts-ignore
@@ -22,8 +22,9 @@ import MessageBox from './MessageBox'
 
 const HomeDefault = React.memo((props: any) =>{
      const colorMode = useAppColor();
+
      const isFocused = useIsFocused();
-     const dispatch = useAppDispatch();
+
      useEffect(()=> {
         if(isFocused){
             // dispatch(setHideBottomTab(true));
@@ -32,19 +33,10 @@ const HomeDefault = React.memo((props: any) =>{
     return(
         <View style={[styles.mainStyle,{backgroundColor:colorMode.inverseWhiteGray,flex:1}]}>
             <HomeDefaultHeader navigation={props.navigation}/>
-            <View style={{flex:1}}>
-                <FlatList
-                    data={[{}]}
-                    contentContainerStyle={{flexDirection:'column-reverse',height:'100%'}}
-                    renderItem={({ item }) => 
-                        <>
-                            <WelcomeMessage/>
-                            <MessageBox/>
-                        </>
-                    }
-                />
-        
-            </View>
+            <ScrollView style={{flex:1,flexDirection:'column'}} contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}>
+                <WelcomeMessage/>
+                <MessageBox/>
+            </ScrollView>
             <ChatBox />
         </View>
     )
@@ -53,7 +45,7 @@ const HomeDefault = React.memo((props: any) =>{
 const HomeDefaultHeader = React.memo(({navigation} : {navigation:any}) =>{
     const isFocused = useIsFocused();  
     const colorMode = useAppColor();
-    const chanel = useAppSelector(state => state.server.channelData);
+    const channel = useAppSelector(state => state.server.channelData);
     const dispatch = useAppDispatch()
      useEffect(()=> {
         if(isFocused){
@@ -61,7 +53,7 @@ const HomeDefaultHeader = React.memo(({navigation} : {navigation:any}) =>{
         }
      },[isFocused])
     return (
-        <View style={[styles.titleChanel,{backgroundColor:colorMode.inverseWhiteLightGray,}]}>
+        <View style={[styles.titlechannel,{backgroundColor:colorMode.inverseWhiteLightGray,}]}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
                 <View style={{marginLeft:14,marginRight:8}} onTouchEnd={() => navigation.openDrawer()}>
                     <BackIcon width={25} height={25}></BackIcon>
@@ -69,11 +61,11 @@ const HomeDefaultHeader = React.memo(({navigation} : {navigation:any}) =>{
 
                 <View style={{flexDirection:'row',alignItems:'center',marginLeft:12}}>
                     {
-                        chanel.type === 'text' ?
+                        channel?.type === 'text' ?
                          <HashTagIcon width={25} height={25}/>:
                          <SpeakerIcon width={25} height={25}/>
                     }
-                    <TText fontFamily='bold' style={{fontWeight:'bold', marginLeft:5,color:colorMode.inverseBlack,fontSize:16}} numberOfLines={1}>{chanel.title}</TText>
+                    <TText fontFamily='bold' style={{fontWeight:'bold', marginLeft:5,color:colorMode.inverseBlack,fontSize:16}} numberOfLines={1}>{channel?.title}</TText>
                 </View>
             </View>
          
@@ -94,7 +86,7 @@ const styles = StyleSheet.create({
     mainStyle:{
 
     },
-    titleChanel:{
+    titlechannel:{
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'space-between',

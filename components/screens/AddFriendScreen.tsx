@@ -36,11 +36,14 @@ const AddFriendScreen = React.memo((props:any) => {
         checkread: false, 
         to: recipientHashtagName, 
         notificationAt: Date.now(), 
+        type:0,
+        server:null,
+        chanel:null,
+        message:''
       };
-
-      const docRef = await notificationRef.add(notificationData);
-      const notificationId = docRef.id;
-      await docRef.update({ id: notificationId });
+       const docRef = await notificationRef.add(notificationData);
+       await docRef.update({ id: docRef.id });
+      
       setName('');
       showMessage({
         message: "Gửi kết bạn thành công!",

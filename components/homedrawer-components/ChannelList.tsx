@@ -6,38 +6,41 @@ import useAppColor from '../../themed/useAppColor'
 import Dots from '../../assets/guildMoreOptions1.svg'
 // @ts-ignore
 import InvitePersonIcon from '../../assets/guildInvitePeople.svg'
-import { ChanelListSection } from '../../shared/Reusables'
+import { ChannelListSection } from '../../shared/Reusables'
 import InviteScreen from './InviteScreen'
 import { Portal } from 'react-native-portalize'
 import { useAppSelector } from '../../shared/rdx-hooks'
-import { ChanelListContent } from '../../shared/constants'
+import { ChannelListContent } from '../../shared/constants'
 
 const ChanelList = React.memo((props:any) =>{
     const colorMode = useAppColor();
     const server = useAppSelector(state =>state.server.serverData);
+    const user = useAppSelector(state =>state.user.currentUser);
     return(
-        <ChanelListContent.Provider value={{navigation:props.navigation}}>
+        <ChannelListContent.Provider value={{navigation:props.navigation}}>
 
             <View style={[styles.mainList,{backgroundColor:colorMode.inverseWhiteLightGray}]}>
-            {Object.keys(server).length > 0 ? (
+            { server && server.channels && server.channels?.length>0 ? (
                     <>
                         <ServerListHeader />
-                        <InviteOthers />
+                        {server.createby === user?.id && <InviteOthers />}
+                        
                     </>
                 ) : null}
-            <ChanelListSection/>
+            <ChannelListSection/>
             </View>
-        </ChanelListContent.Provider>
+        </ChannelListContent.Provider>
     )
 })
 
 const ServerListHeader = React.memo((props: any) =>{
     const server = useAppSelector(state =>state.server.serverData);
+    const user = useAppSelector(state =>state.user.currentUser);
      const colorMode = useAppColor();
     return(
         <TouchableOpacity style={styles.listHeader}>
             <TText style={{color:colorMode.inverseBlack,fontSize:18,fontWeight:'bold'}}>{server.title}</TText>
-            <Dots width={30} height={30}/>
+             {server.createby === user?.id && <Dots width={30} height={30}/>}
         </TouchableOpacity>
     )
 })

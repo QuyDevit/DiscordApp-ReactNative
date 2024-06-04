@@ -19,8 +19,8 @@ const WelcomeMessage = React.memo((props :any) => {
         </View>
         <View style={{marginTop:10}}>
             <TText style={[styles.textTitle,{color:colorMode.inverseBlack}]} fontFamily='bold'>Chào mừng bạn đến với</TText>
-            <TText style={[styles.textTitle,{color:colorMode.inverseBlack}]} fontFamily='semiBold'>#{chanel.title}</TText>
-            <TText style={{fontSize:16,marginTop:5,fontWeight:'600',color:colorMode.inverseBlack}}>Đây là sự khởi đầu của kênh #{chanel.title}</TText>
+            <TText style={[styles.textTitle,{color:colorMode.inverseBlack}]} fontFamily='semiBold'>#{chanel?.title}</TText>
+            <TText style={{fontSize:16,marginTop:5,fontWeight:'600',color:colorMode.inverseBlack}}>Đây là sự khởi đầu của kênh #{chanel?.title}</TText>
         </View>
         {/* <TouchableOpacity style={{flexDirection:'row',marginTop:10}}>
             <EditServerIcon  width={25} height={25}/>

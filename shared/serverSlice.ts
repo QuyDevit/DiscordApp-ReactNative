@@ -2,6 +2,16 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import firestore, { doc } from '@react-native-firebase/firestore';
 import { TChannel, TServerData,IServerSlice } from './types';
 
+const initialServerData: TServerData = {
+  id: '',
+  image: '',
+  title: '',
+  channels: [],
+  createby: '',
+  listmember: [],
+  cratedate: 0
+};
+
 const initialState: IServerSlice= {
   servers: [],
   loading: false,
@@ -50,6 +60,15 @@ const serverSlice = createSlice({
      setChannelData: (state, action: PayloadAction<TChannel>) => {
       state.channelData = action.payload
     },
+    clearServers: (state) => {
+      state.servers = null;
+    }, 
+    clearServerData: (state) => {
+      state.serverData = initialServerData;
+    },
+      clearChannelData: (state) => {
+      state.channelData = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserServers.pending, (state) => {
@@ -68,6 +87,6 @@ const serverSlice = createSlice({
   },
 });
 
-export const { setServerData, setChannelData } = serverSlice.actions
+export const { setServerData, setChannelData,clearServers,clearServerData,clearChannelData } = serverSlice.actions
 
 export default serverSlice.reducer;
