@@ -27,7 +27,7 @@ const Notification = React.memo((props:any) => {
         const fetchedNotifications = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
-        })) as TNotification[];
+        })) as TNotification[];  
 
         const filteredNotifications = fetchedNotifications.filter(notification => {
           if (notification.type === 1) {
@@ -39,7 +39,7 @@ const Notification = React.memo((props:any) => {
           }
           return false;
         }).sort((a, b) => {
-          const order: { [key: number]: number } = {1: 1, 3: 2, 2: 3}; // Define the desired order
+          const order: { [key: number]: number } = {1: 1, 3: 2, 2: 3}; 
           return order[a.type] - order[b.type];
         });;
 

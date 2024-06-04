@@ -16,7 +16,7 @@ const SearchScreen = React.memo(React.forwardRef((props:any, ref:any) => {
   const [servers,setServers] = useState<TServerData[]>([]);
   const [enableArray, setEnableArray] = useState<boolean[]>([]); 
   const [text,setText] = useState('');
-     useEffect(() => {
+      useEffect(() => {
         if (user?.id){
           const serverDocRef = firestore()
             .collection('SERVERS')
