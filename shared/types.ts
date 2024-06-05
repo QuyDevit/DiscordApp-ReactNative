@@ -99,7 +99,7 @@ export type TMess = {
     type:TMessType,
     image:string
 };
-export type TMessType = 'image' | 'text'
+export type TMessType = 'image' | 'text' | 'voice'
 export type TFontFamily = 'bold' | 'semiBold' | 'medium' | 'regular'
 
 export type TAppColorMode = 'light' | 'dark'

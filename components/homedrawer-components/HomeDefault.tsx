@@ -121,9 +121,9 @@ const getPermission = async () => {
 };
 
 const VoiceRoom = React.memo((props:any) =>{
-     const user = useAppSelector(state =>state.user.currentUser);
+    const user = useAppSelector(state =>state.user.currentUser);
     const [members,setMembers] = useState<TUser[]>([])
-     const colorMode = useAppColor();
+    const colorMode = useAppColor();
 
     const channel = useAppSelector(state => state.server.channelData);
     useEffect(() =>{
@@ -225,13 +225,14 @@ const VoiceRoom = React.memo((props:any) =>{
     };
     return(
          <ScrollView style={{flex:1, borderBottomWidth:1,borderColor:'#E5E5E6'}}>
-            <View style={{flexDirection:'row',paddingHorizontal:10,justifyContent:'space-around',marginTop:15}}>
-                <TouchableOpacity onPress={join} style={{backgroundColor:'#4AE860',paddingHorizontal:10,paddingVertical:5,borderRadius:10}} >
+            <View style={{flexDirection:'row',paddingHorizontal:10,justifyContent:'center',marginTop:15}}>
+                {!isJoined ? <TouchableOpacity onPress={join} style={{backgroundColor:'#4AE860',paddingHorizontal:10,paddingVertical:5,borderRadius:10}} >
                     <TText style={{color:'white'}}>Tham gia phòng</TText>
-                </TouchableOpacity>
+                </TouchableOpacity> :
                 <TouchableOpacity onPress={leave} style={{backgroundColor:'#F04C4C',paddingHorizontal:10,paddingVertical:5,borderRadius:10}}>
                     <TText style={{color:'white'}}>Rời phòng</TText>
                 </TouchableOpacity>
+                }                       
             </View>
             {members.map((item) => (
                 <View key={item.id} style={{ flexDirection: 'row', alignItems: 'center',margin:10 }}>

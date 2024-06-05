@@ -71,7 +71,7 @@ const Overview = React.memo((props:any) => {
          </View>
         <ListComp title='Lấy Nitro' icon={<NitroIcon  width={35} height={35} />} />
         <ListComp callbackFn={() =>  {props.navigation.navigate('Account');dispatch(setHideBottomTab(true))}} title='Tài khoản' icon={<IconUser  width={30} height={30} style={{opacity:.8}}/>} />
-        <ListComp title='Thông tin' icon={<PenIcon  width={30} height={30} style={{opacity:.8}}/>} />
+        <ListComp callbackFn={() =>  {props.navigation.navigate('Audio');dispatch(setHideBottomTab(true))}} title='Thông tin' icon={<PenIcon  width={30} height={30} style={{opacity:.8}}/>} />
         <ListComp title='Bảo vệ tài khoản' icon={<SecurityIcon  width={30} height={30}/>} />
            <View style={{backgroundColor: colorMode.appLightGray, height: 70, justifyContent: 'flex-end', paddingVertical: 10, paddingHorizontal: 10}}>
             <TText style={{color: colorMode.inverseBlack,fontWeight:'bold',fontSize:16}}>Cài đặt ứng dụng</TText>
@@ -83,9 +83,9 @@ const Overview = React.memo((props:any) => {
         <ListComp title='Tặng Nitro' icon={<ChatGiftIcon  width={30} height={30} style={{opacity:.9}}/>} />
         <ListComp title='Hỗ trợ' icon={<InforIcon  width={30} height={30} style={{opacity:.8}}/>} />
 
-         <TouchableOpacity onPress={logout} style={{alignItems:'center',paddingVertical:15}}>
+        <TouchableOpacity onPress={logout} style={{alignItems:'center',paddingVertical:15}}>
             <TText style={{fontSize:18,color:'red',fontWeight:'600'}}>Đăng Xuất</TText>
-         </TouchableOpacity>
+        </TouchableOpacity>
 
     </ScrollView>
   )
