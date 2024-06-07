@@ -73,7 +73,8 @@ const RegisterScreen = React.memo((props:any) => {
                             birthday: date.toLocaleDateString(), 
                             avatart:'https://e7.pngegg.com/pngimages/842/992/png-clipart-discord-computer-servers-teamspeak-discord-icon-video-game-smiley-thumbnail.png',
                             status:1,
-                            listfriend:[]
+                            listfriend:[],
+                            nitro:false
                         };
                         USER.doc(userId).set(
                             newUser

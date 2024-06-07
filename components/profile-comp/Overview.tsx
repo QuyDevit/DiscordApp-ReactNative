@@ -37,14 +37,16 @@ const Overview = React.memo((props:any) => {
     }, [dispatch])
   );
   useEffect(() =>{
-    if(user === null){
-      props.navigation.navigate('LoginScreen')
+    if(user === null){          
+      props.navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'LoginScreen' }],
+                    })
     }
   },[user])
 
   const logout = userLogout();
 
-    
   return (
    <ScrollView style={{flex:1,backgroundColor:colorMode.inverseWhiteGray}}>
         <View style={{height:230,width:'100%',backgroundColor:colorMode.balanced_blue}}/>
@@ -54,7 +56,12 @@ const Overview = React.memo((props:any) => {
                   <View style={{width:100,height:100,borderRadius:50,overflow:'hidden'}}>
                       <FastImageRes uri={userUri} />
                   </View>
+                 
                 </View>
+                {user?.nitro &&  
+                <View style={{position:'absolute',top:-65,left:110}}>
+                      <NitroIcon  width={60} height={60} />
+                  </View>}
                 <View style={{paddingLeft:10}}>
                     <TText style={{fontSize:30,color:colorMode.inverseBlack,fontWeight:'bold'}}>{user?.name}</TText>
                     <TText>{user?.hashtagname}</TText>
@@ -63,13 +70,12 @@ const Overview = React.memo((props:any) => {
               <TouchableOpacity style={{height:40,width:55,borderRadius:20,backgroundColor:colorMode.appGray,justifyContent:'center',alignItems:'center'}}>
                   <HashWithBg width={30} height={30}/>
               </TouchableOpacity>
-    
         </View>
 
        <View style={{backgroundColor: colorMode.appLightGray, height: 70, justifyContent: 'flex-end', paddingVertical: 10, paddingHorizontal: 10}}>
             <TText style={{color: colorMode.inverseBlack,fontWeight:'bold',fontSize:16}}>Cài đặt tài khoản</TText>
          </View>
-        <ListComp title='Lấy Nitro' icon={<NitroIcon  width={35} height={35} />} />
+        <ListComp callbackFn={() =>  {props.navigation.navigate('Nitro');dispatch(setHideBottomTab(true))}} title='Lấy Nitro' icon={<NitroIcon  width={35} height={35} />} />
         <ListComp callbackFn={() =>  {props.navigation.navigate('Account');dispatch(setHideBottomTab(true))}} title='Tài khoản' icon={<IconUser  width={30} height={30} style={{opacity:.8}}/>} />
         <ListComp callbackFn={() =>  {props.navigation.navigate('Audio');dispatch(setHideBottomTab(true))}} title='Thông tin' icon={<PenIcon  width={30} height={30} style={{opacity:.8}}/>} />
         <ListComp title='Bảo vệ tài khoản' icon={<SecurityIcon  width={30} height={30}/>} />

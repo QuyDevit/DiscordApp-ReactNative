@@ -34,7 +34,8 @@ export type TUser = {
   birthday:string;
   avatart:string;
   status:number,
-  listfriend:Array<TUser>
+  listfriend:Array<TUser>;
+  nitro:boolean
 }
 
 export type TServerData = {

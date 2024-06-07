@@ -218,7 +218,8 @@ export const handleGoogleSignIn = async (): Promise<TUser> => {
                 birthday: '', 
                 avatart:user.photoURL || '',
                 status:1,
-                listfriend:[]
+                listfriend:[],
+                nitro:false
             };
 
             await userDocRef.set(newUser);

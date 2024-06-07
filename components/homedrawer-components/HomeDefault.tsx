@@ -17,7 +17,6 @@ import { useAppDispatch, useAppSelector } from '../../shared/rdx-hooks'
 import { setHideBottomTab, setOpenRightDrawer } from '../../shared/rdx-slice'
 import ChatBox from './ChatBox'
 import WelcomeMessage from './WelcomeMessage'
-import { FlashList } from '@shopify/flash-list'
 import MessageBox from './MessageBox'
 import { FastImageRes } from '../../shared/Reusables'
 import { PermissionsAndroid, Platform } from 'react-native';
