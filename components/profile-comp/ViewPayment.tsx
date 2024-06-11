@@ -24,7 +24,7 @@ const ViewPayment = React.memo(({ route, navigation }:{route :any,navigation:any
       } else if (status === '0') { // Assuming '0' indicates failure
         navigation.navigate('PaymentSuccess',{ status: false });
       }
-    }else{
+    }else if(paymentmethod === 1) {
       status = getQueryParam(url, 'resultCode');
       if (status === '0') {
         const userDocRef = firestore().collection('USERS').doc(user?.id);
@@ -34,6 +34,14 @@ const ViewPayment = React.memo(({ route, navigation }:{route :any,navigation:any
         navigation.navigate('PaymentSuccess',{ status: true });
       }else if (status === '1001') { // Assuming '0' indicates failure
       navigation.navigate('PaymentSuccess',{ status: false });
+    }
+    }else{
+      if (url.includes('success')) {
+        const userDocRef = firestore().collection('USERS').doc(user?.id);
+        await userDocRef.set({ nitro: true }, { merge: true });
+        const userData = await userDocRef.get();
+        dispatch(setUser(userData.data() as TUser));
+        navigation.navigate('PaymentSuccess',{ status: true });
     }
     }
 

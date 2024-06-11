@@ -31,8 +31,8 @@ import {
 import { TUser } from '../../shared/types'
 
 const appId = '1e1b34450d00434287013237b1da550b';
-const token = '007eJxTYOD60hMWGfG/XGjqXOXa/Vc/xfIesOKc+zflWPobti1zM3YrMBimGiYZm5iYGqQYGJgYmxhZmBsYGhsZmycZpiSamhokqTjGpzUEMjKs6ZvLzMgAgSA+N0NRfn5uckZiXl5qDgMDAChnIao=';
-const channelName = 'roomchannel';
+const token = '007eJxTYEic48x2Mmvfd7uJn0++MV8TZzT7jGnInVqhQydKJ6+4WaajwGCYaphkbGJiapBiYGBibGJkYW5gaGxkbJ5kmJJoamqQ9GBGelpDICND5+96JkYGCATxuRmSMxLz8lJzivLzcxkYAKBXI6k=';
+const channelName = 'channelroom';
 const uid = Math.floor(Math.random() * 99999999);
 
 const HomeDefault = React.memo((props: any) =>{

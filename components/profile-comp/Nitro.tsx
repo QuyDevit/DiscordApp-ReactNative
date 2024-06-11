@@ -13,6 +13,8 @@ import Icon1 from "../../assets/icon1.svg";
 import ZaloPayIcon from "../../assets/zalopay.svg";
 // @ts-ignore
 import MomoIcon from "../../assets/momo.svg";
+// @ts-ignore
+import PaypalIcon from "../../assets/paypal.svg";
 
 
 const Nitro = React.memo((props:any) => {
@@ -25,18 +27,20 @@ const Nitro = React.memo((props:any) => {
         if(checkedpayment === 'zalo')
         {
             payment = 'https://server-api-payment.vercel.app/payment'
-        }else{
+        }else if (checkedpayment === 'momo'){
             payment= 'https://server-api-payment.vercel.app/payment-momo'
+        }else{
+            payment= 'https://server-api-payment.vercel.app/pay'
         }
         if(checked === 'basic'){
             item = {
                 content:'Nâng Cấp Gói Nitro Basic',
-                price:42000
+                price: checkedpayment==='paypal' ? 1.65  :42000 
             }
         }else{
             item ={
                 content:'Nâng Cấp Gói Nitro Pro',
-                price:113000
+                price: checkedpayment==='paypal' ? 4.45  :113000
             }
         }
         try {
@@ -53,7 +57,7 @@ const Nitro = React.memo((props:any) => {
             if (contentType && contentType.includes('application/json')) {
                 const data = await response.json();
                 if (data) {
-                    props.navigation.navigate('ViewPayment', { orderUrl: checkedpayment==='zalo'? data.order_url : data.payUrl,paymentmethod:checkedpayment==='zalo'? 0:1 });
+                    props.navigation.navigate('ViewPayment', { orderUrl: checkedpayment==='zalo'? data.order_url : checkedpayment==='momo' ? data.payUrl: data.approval_url ,paymentmethod:checkedpayment==='zalo'? 0 :checkedpayment==="momo"?1:2 });
                 } else {
                     // Handle case when order_url is not found
                     console.error('No order URL found in response');
@@ -132,7 +136,7 @@ const Nitro = React.memo((props:any) => {
                     onPress={() => setCheckedPayment('zalo')}
                     color={'black'}
                 />
-                <ZaloPayIcon width={120} height={40}/>
+                <ZaloPayIcon width={100} height={40}/>
                 </TouchableOpacity>
                  <TouchableOpacity onPress={() => setCheckedPayment('momo')} style={{flexDirection:'row'}}>
                     <RadioButton
@@ -141,7 +145,16 @@ const Nitro = React.memo((props:any) => {
                     onPress={() => setCheckedPayment('momo')}
                     color={'black'}
                 />
-                <MomoIcon width={80} height={40}/>
+                <MomoIcon width={50} height={35}/>
+                </TouchableOpacity>
+                 <TouchableOpacity onPress={() => setCheckedPayment('paypal')} style={{flexDirection:'row',}}>
+                    <RadioButton
+                    value="paypal"
+                    status={checkedpayment === 'paypal' ? 'checked' : 'unchecked'}
+                    onPress={() => setCheckedPayment('paypal')}
+                    color={'black'}
+                />
+                <PaypalIcon width={100} height={40}/>
                 </TouchableOpacity>
             </View>
             <TouchableOpacity onPress={handlePress} style={{position:'absolute',bottom:0,left:0,right:0, paddingVertical:15,backgroundColor:"#5E71EC",marginHorizontal:10,borderRadius:15,alignItems:'center',justifyContent:'center',marginBottom:20}}>
